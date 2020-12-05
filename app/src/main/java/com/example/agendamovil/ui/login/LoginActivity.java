@@ -2,9 +2,11 @@ package com.example.agendamovil.ui.login;
 
 import android.app.Activity;
 
+import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -23,17 +25,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.agendamovil.R;
+import com.example.agendamovil.Singup;
 import com.example.agendamovil.ui.login.LoginViewModel;
 import com.example.agendamovil.ui.login.LoginViewModelFactory;
 
 public class LoginActivity extends AppCompatActivity {
 
     private LoginViewModel loginViewModel;
-
+    private Toolbar toolbar;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        toolbar = findViewById(R.id.toolbar_custom);
+        toolbar.setTitle("Inicio de sesion");
+
         loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
 
@@ -127,5 +133,10 @@ public class LoginActivity extends AppCompatActivity {
 
     private void showLoginFailed(@StringRes Integer errorString) {
         Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
+    }
+
+    public void goSingup(View v){
+        Intent singup = new Intent(this, Singup.class);
+        startActivity(singup);
     }
 }
