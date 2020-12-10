@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Correo electronico</string>
+    <string name="prompt_password">Contraseña</string>
+    <string name="action_sign_in_short">Iniciar sesión</string>
+    <string name="sign_up_here">¿No tienes una cuenta? Puedes crearla aquí</string>
+    <string name="welcome">"Bienvenido!"</string>
+
+    <!-- Sign up string -->
+    <string name="sign_up">Registrate</string>
+    <string name="username">Nombre de usuario</string>
+    <string name="password_confirm">Confirma la contraseña</string>
+
+    <!-- Agenda -->
+    <string name="agenda">Agenda</string>
+
+    <!-- Error messages -->
+    <string name="invalid_username">Nombre invalido</string>
+    <string name="invalid_password">Contraseña invalida</string>
+    <string name="login_failed">"Inicion de sesion fallido"</string>
+
+    <!-- Cardcontact -->
+    <string name="edit">Editar</string>
+    <string name="delete">Eliminar</string>
+    <string name="accept">Aceptar</string>
+    <string name="cancel">Cancelar</string>
+
+    <!-- Contact -->
+    <string name="new_contact">Contacto nuevo</string>
+    <string name="contact_name">Nombre</string>
+    <string name="phone">Telefono</string>
+    <string name="img_contact">Imagen de contacto (opcional)</string>
+    <string name="add_image">Añadir imagen</string>
+    <string name="create_contact">Crear contacto</string>
+    <string name="name_info">Solo letras, numeros y parentesis</string>
+    <string name="phone_info">Solo numeros (10 digitos), parentesis y los caracteres (+) y (-)</string>
+    <string name="img_info">Imagen de tamaño maximo de 2 MB y en formato jpg o png</string>
+
+    <!-- Edit profile -->
+    <string name="profile_tittle">Perfil</string>
+    <string name="change_pass">Cambiar contraseña</string>
+    <string name="new_name">Nombre nuevo</string>
+    <string name="new_email">Nuevo correo electronico</string>
+    <string name="new_pass">Contraseña nueva</string>
+
+    <!-- Toolbar menu -->
+    <string name="search_tittle">Buscar</string>
+    <string name="close_session">Cerrar sesión</string>
+
+</resources>

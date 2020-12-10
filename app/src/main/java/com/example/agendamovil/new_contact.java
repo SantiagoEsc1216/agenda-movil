@@ -36,7 +36,7 @@ public class new_contact extends AppCompatActivity {
         setContentView(R.layout.activity_new_contact);
 
         toolbar = findViewById(R.id.toolbar_custom);
-        toolbar.setTitle("Nuevo contacto");
+        toolbar.setTitle(R.string.create_contact);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(getDrawable(R.drawable.baseline_home_white_18dp));

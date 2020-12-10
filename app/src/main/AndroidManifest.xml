@@ -17,7 +17,7 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
 
-        <activity android:name=".Singup">
+        <activity android:name=".Signup">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>

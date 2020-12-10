@@ -28,7 +28,7 @@ public class Agenda extends AppCompatActivity {
         setContentView(R.layout.activity_agenda);
         toolbar = (Toolbar) findViewById(R.id.toolbar_custom);
         setSupportActionBar(toolbar);
-
+        toolbar.setTitle(R.string.agenda);
         scrollContacts = (LinearLayout) findViewById(R.id.scroll_contacts);
         addNewContact = (FloatingActionButton)findViewById(R.id.create_contact);
         createCardContacts();

@@ -32,9 +32,11 @@ public class Profile extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
 
         toolbar = findViewById(R.id.toolbar_custom);
+        toolbar.setTitle(R.string.profile_tittle);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(getDrawable(R.drawable.baseline_home_white_18dp));
+
 
         name_form = (LinearLayout) findViewById(R.id.name_form);
         email_form = (LinearLayout) findViewById(R.id.email_form);

@@ -14,7 +14,7 @@ import com.example.agendamovil.toolbar.ToolbarFunctions;
 import com.example.agendamovil.validators.InputValidator_2;
 import com.example.agendamovil.validators.ValidatorOnTextChange;
 
-public class  Singup extends AppCompatActivity {
+public class Signup extends AppCompatActivity {
 
     EditText email, username, pass, confirmPass;
     Button sendButton;
@@ -24,10 +24,10 @@ public class  Singup extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_singup);
+        setContentView(R.layout.activity_signup);
 
         toolbar = findViewById(R.id.toolbar_custom);
-        toolbar.setTitle("Registro");
+        toolbar.setTitle(R.string.sign_up);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 

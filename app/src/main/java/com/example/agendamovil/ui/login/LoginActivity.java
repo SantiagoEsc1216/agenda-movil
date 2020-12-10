@@ -25,9 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.agendamovil.R;
-import com.example.agendamovil.Singup;
-import com.example.agendamovil.ui.login.LoginViewModel;
-import com.example.agendamovil.ui.login.LoginViewModelFactory;
+import com.example.agendamovil.Signup;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -38,7 +36,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         toolbar = findViewById(R.id.toolbar_custom);
-        toolbar.setTitle("Inicio de sesion");
+        toolbar.setTitle(R.string.action_sign_in_short);
 
         loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
@@ -136,7 +134,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void goSingup(View v){
-        Intent singup = new Intent(this, Singup.class);
+        Intent singup = new Intent(this, Signup.class);
         startActivity(singup);
     }
 }

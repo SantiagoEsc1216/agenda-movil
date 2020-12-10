@@ -33,7 +33,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Nombre:" />
+                android:text="@string/username" />
 
             <Button
                 android:id="@+id/btn_name"
@@ -41,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
                 android:onClick="visibleName"
-                android:text="Editar" />
+                android:text="@string/edit" />
 
         </LinearLayout>
         <LinearLayout android:id="@+id/name_form"
@@ -55,7 +55,7 @@
                 android:id="@+id/new_name_label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Nuevo nombre:" />
+                android:text="@string/new_name" />
 
             <EditText
                 android:id="@+id/new_name"
@@ -69,7 +69,7 @@
                 android:id="@+id/pass_label_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Contraseña" />
+                android:text="@string/prompt_password" />
 
             <EditText
                 android:id="@+id/pass_name"
@@ -83,7 +83,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#5cb85c"
-                android:text="Aceptar" />
+                android:text="@string/accept" />
 
             <Button
                 android:id="@+id/cancel_name"
@@ -91,7 +91,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#d9534f"
-                android:text="Cancelar" />
+                android:text="@string/cancel" />
         </LinearLayout>
 
         <LinearLayout
@@ -105,7 +105,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="E-mail" />
+                android:text="@string/prompt_email" />
 
             <Button
                 android:id="@+id/btn_email"
@@ -113,7 +113,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
                 android:onClick="visibleEmail"
-                android:text="Editar" />
+                android:text="@string/edit" />
 
         </LinearLayout>
         <LinearLayout android:id="@+id/email_form"
@@ -127,7 +127,7 @@
                 android:id="@+id/new_mail_label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Nuevo E-Mail:" />
+                android:text="@string/new_email" />
 
             <EditText
                 android:id="@+id/new_mail"
@@ -141,7 +141,7 @@
                 android:id="@+id/pass_label_mail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Contraseña" />
+                android:text="@string/prompt_password" />
 
             <EditText
                 android:id="@+id/pass_mail"
@@ -155,7 +155,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#5cb85c"
-                android:text="Aceptar" />
+                android:text="@string/accept" />
 
             <Button
                 android:id="@+id/cancel_email"
@@ -163,7 +163,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#d9534f"
-                android:text="Cancelar" />
+                android:text="@string/cancel" />
         </LinearLayout>
 
         <LinearLayout
@@ -179,7 +179,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:onClick="visiblePass"
-                android:text="Cambiar contraseña" />
+                android:text="@string/change_pass" />
         </LinearLayout>
         <LinearLayout android:id="@+id/pass_form"
             android:layout_width="match_parent"
@@ -192,7 +192,7 @@
                 android:id="@+id/new_pass_label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Contraseña nueva:" />
+                android:text="@string/new_pass" />
             <EditText
                 android:id="@+id/new_pass"
                 android:layout_width="match_parent"
@@ -205,7 +205,7 @@
                 android:id="@+id/pass_label_confirm"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Confirmar contraseña:" />
+                android:text="@string/password_confirm" />
             <EditText
                 android:id="@+id/pass_confirm"
                 android:layout_width="match_parent"
@@ -217,7 +217,7 @@
                 android:id="@+id/pass_label_pass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Contraseña" />
+                android:text="@string/prompt_password" />
             <EditText
                 android:id="@+id/pass_pass"
                 android:layout_width="match_parent"
@@ -230,14 +230,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#5cb85c"
-                android:text="Aceptar" />
+                android:text="@string/accept" />
             <Button
                 android:onClick="cancelForm"
                 android:id="@+id/cancel_pass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#d9534f"
-                android:text="Cancelar" />
+                android:text="@string/cancel" />
         </LinearLayout>
 
     </LinearLayout>

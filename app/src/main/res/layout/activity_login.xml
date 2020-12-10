@@ -28,18 +28,15 @@
         app:layout_constraintVertical_bias="0.291"
         tools:ignore="MissingConstraints">
 
-        <EditText
+        <TextView
             android:id="@+id/tittle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="24dp"
-            android:background="#00FFFFFF"
-            android:backgroundTint="#00FFFF"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Inicio de sesion"
+            android:text="@string/action_sign_in_short"
+            android:textColor="@color/black"
             android:textSize="24sp" />
 
         <LinearLayout
@@ -54,7 +51,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginEnd="24dp"
-                android:text="Correo" />
+                android:text="@string/prompt_email" />
 
             <EditText
                 android:id="@+id/email"
@@ -81,7 +78,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginEnd="24dp"
-                android:text="Contraseña" />
+                android:text="@string/prompt_password" />
 
             <EditText
                 android:id="@+id/password"
@@ -110,7 +107,7 @@
             android:background="#FFFFFF"
             android:backgroundTint="#0275d8"
             android:enabled="false"
-            android:text="Iniciar sesion"
+            android:text="@string/action_sign_in_short"
             android:textColor="#FFFFFF"
             app:strokeColor="#FFFFFF" />
 
@@ -127,7 +124,7 @@
             android:background="#FFFFFF"
             android:backgroundTint="#FFFFFF"
             android:enabled="true"
-            android:text="¿No tienes una cuenta?  Puedes registrate aqui"
+            android:text="@string/sign_up_here"
             android:textColor="#0275d8"
             app:strokeColor="#FFFFFF" />
 

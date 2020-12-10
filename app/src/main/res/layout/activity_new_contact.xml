@@ -32,18 +32,16 @@
             app:layout_constraintStart_toStartOf="parent"
             tools:ignore="MissingConstraints">
 
-            <EditText
+            <TextView
                 android:id="@+id/tittle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="24dp"
-                android:background="#00FFFFFF"
-                android:backgroundTint="#00FFFF"
+                android:textColor="@color/black"
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:text="Nuevo contacto"
+                android:text="@string/new_contact"
                 android:textSize="24sp" />
 
             <LinearLayout
@@ -57,7 +55,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
                     android:layout_marginEnd="24dp"
-                    android:text="Nombre" />
+                    android:text="@string/contact_name" />
 
                 <EditText
                     android:id="@+id/name_new_contact"
@@ -75,7 +73,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
                     android:layout_marginEnd="24dp"
-                    android:text="Solo letras, numeros y parentesis" />
+                    android:text="@string/name_info" />
 
             </LinearLayout>
 
@@ -91,7 +89,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
                     android:layout_marginEnd="24dp"
-                    android:text="E-Mail" />
+                    android:text="@string/prompt_email" />
 
                 <EditText
                     android:id="@+id/email_new_contact"
@@ -124,7 +122,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
                     android:layout_marginEnd="24dp"
-                    android:text="Telefono" />
+                    android:text="@string/phone" />
 
                 <EditText
                     android:id="@+id/phone_new_contact"
@@ -141,7 +139,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
                     android:layout_marginEnd="24dp"
-                    android:text="Solo numeros (10 digitos), parentesis y los caracteres (+) y (-)" />
+                    android:text="@string/phone_info" />
 
 
             </LinearLayout>
@@ -157,7 +155,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
                     android:layout_marginEnd="24dp"
-                    android:text="Imagen de contacto (opcional)" />
+                    android:text="@string/img_contact" />
 
                 <ImageView
                     android:id="@+id/imgContact"
@@ -166,6 +164,15 @@
                     android:src="@drawable/default_img"
                     tools:layout_editor_absoluteX="16dp"
                     tools:layout_editor_absoluteY="16dp" />
+
+                <TextView
+                    android:id="@+id/imgage_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginBottom="8dp"
+                    android:text="@string/img_info" />
 
                 <Button
                     android:id="@+id/upload_img"
@@ -180,19 +187,9 @@
                     android:backgroundTint="@android:color/darker_gray"
                     android:enabled="true"
                     android:onClick="selectImage"
-                    android:text="Agregar imagen"
+                    android:text="@string/add_image"
                     android:textColor="#000000"
                     app:strokeColor="#FFFFFF" />
-
-
-                <TextView
-                    android:id="@+id/imgage_info"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginEnd="24dp"
-                    android:text="Imagen de tamaño maximo de 2 MB y en formato jpg o png" />
-
 
             </LinearLayout>
 
@@ -209,7 +206,7 @@
                 android:backgroundTint="#0275d8"
                 android:enabled="false"
                 android:onClick="validNewContactForm"
-                android:text="Agregar contacto"
+                android:text="@string/create_contact"
                 android:textColor="#FFFFFF"
                 app:strokeColor="#FFFFFF" />
 

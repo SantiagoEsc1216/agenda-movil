@@ -69,38 +69,44 @@
         android:layout_height="wrap_content"
         android:background="@drawable/border_card_header">
 
-        <Button android:id="@+id/btn_edit"
+        <Button
+            android:id="@+id/btn_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
             android:layout_marginHorizontal="16dp"
             android:backgroundTint="#0275d8"
-            android:text="Editar" />
-        <Button android:id="@+id/btn_delete"
-            android:layout_width="match_parent"
-            android:layout_marginHorizontal="16dp"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:text="Eliminar"
-            android:backgroundTint="#d9534f"/>
+            android:text="@string/edit"
+            android:textColor="@color/white" />
 
-        <Button android:id="@+id/btn_accept"
-            android:onClick="val"
+        <Button
+            android:id="@+id/btn_delete"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
-            android:textColor="@color/white"
-            android:backgroundTint="#5cb85c"
-            android:text="Aceptar"
-            android:visibility="gone"/>
-        <Button android:id="@+id/btn_cancel"
-            android:layout_width="match_parent"
-            android:layout_marginHorizontal="16dp"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:text="Cancelar"
             android:backgroundTint="#d9534f"
-            android:visibility="gone"/>
+            android:text="@string/delete"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/btn_accept"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:backgroundTint="#5cb85c"
+            android:onClick="val"
+            android:text="@string/accept"
+            android:textColor="@color/white"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:backgroundTint="#d9534f"
+            android:text="@string/cancel"
+            android:textColor="@color/white"
+            android:visibility="gone" />
 
     </LinearLayout>
 

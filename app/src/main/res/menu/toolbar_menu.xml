@@ -5,15 +5,16 @@
     <item
         android:id="@+id/search"
         android:icon="@android:drawable/ic_menu_search"
-        android:title="search"
+        android:title="@string/search_tittle"
         app:showAsAction="ifRoom"/>
 
-    <item android:title="profile"
+    <item android:title="@string/profile_tittle"
         android:id="@+id/profile_options"
         app:showAsAction="never"/>
 
-    <item android:title="close  sesion"
+    <item android:title="@string/close_session"
         android:id="@+id/close_session"
         app:showAsAction="never"
         />
+
 </menu>
