@@ -27,7 +27,7 @@ import java.util.regex.Pattern;
 import static android.app.Activity.RESULT_OK;
 
 public class CardContact extends LinearLayout {
-    String name_contact, phone_contact, img_contact, email_contact;
+    public String name_contact, phone_contact, img_contact, email_contact;
     EditText name_card, email_card, phone_card;
     ImageView img_view;
     Button btn_edit, btn_cancel, btn_accept, btn_delete, btn_img;

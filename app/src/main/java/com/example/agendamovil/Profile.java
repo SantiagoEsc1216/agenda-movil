@@ -19,6 +19,8 @@ import com.example.agendamovil.validators.ValidatorOnTextChange;
 
 public class Profile extends AppCompatActivity {
 
+    // TODO: ScrollView para vista horizontal
+
     LinearLayout name_form, email_form, pass_form;
     Button send_name, send_email, send_pass;
     EditText new_name, new_email, new_pass, pass_confim;
@@ -146,10 +148,6 @@ public class Profile extends AppCompatActivity {
             case R.id.profile_options:
                 toolbarFunctions.openProfile();
                 return true;
-            case R.id.search:
-                toolbarFunctions.searchContact();
-                return true;
-
         }
 
         return super.onOptionsItemSelected(item);

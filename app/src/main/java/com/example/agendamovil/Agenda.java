@@ -3,24 +3,33 @@ package com.example.agendamovil;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.SearchView;
 
 import com.example.agendamovil.toolbar.ToolbarFunctions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.List;
-
+// TODO: Acomodar boton para añadir contacto en vista horizontal
+// TODO: Search configuration
 public class Agenda extends AppCompatActivity {
     LinearLayout scrollContacts;
     FloatingActionButton addNewContact;
     List<CardContact> cardContactList = new ArrayList<CardContact>();
     Toolbar toolbar;
+    ToolbarFunctions toolbarFunctions = new ToolbarFunctions(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,10 +41,11 @@ public class Agenda extends AppCompatActivity {
         scrollContacts = (LinearLayout) findViewById(R.id.scroll_contacts);
         addNewContact = (FloatingActionButton)findViewById(R.id.create_contact);
         createCardContacts();
+
     }
 
     private void createCardContacts(){
-        for (int i = 0; i < 3; i++){
+        for (int i = 0; i < 8; i++){
             int finalI = i;
             CardContact this_card;
 
@@ -68,12 +78,30 @@ public class Agenda extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar_menu,menu);
+
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView)menu.findItem(R.id.search).getActionView();
+
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                toolbarFunctions.searchContact(cardContactList,newText);
+                return false;
+            }
+        });
+
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        ToolbarFunctions toolbarFunctions = new ToolbarFunctions(this);
         switch (item.getItemId()){
             case R.id.close_session:
                 toolbarFunctions.closeSession();
@@ -84,11 +112,8 @@ public class Agenda extends AppCompatActivity {
             case R.id.profile_options:
                 toolbarFunctions.openProfile();
                 return true;
-            case R.id.search:
-                toolbarFunctions.searchContact();
-                return true;
-
         }
         return super.onOptionsItemSelected(item);
     }
+
 }

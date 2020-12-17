@@ -21,7 +21,7 @@ import com.example.agendamovil.validators.ValidatorOnTextChange;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-
+// TODO:  Centrar formulario en vista horizontal
 public class new_contact extends AppCompatActivity {
 
     EditText name, email, phone;
@@ -158,9 +158,6 @@ public class new_contact extends AppCompatActivity {
                 return true;
             case R.id.profile_options:
                 toolbarFunctions.openProfile();
-                return true;
-            case R.id.search:
-                toolbarFunctions.searchContact();
                 return true;
 
         }
