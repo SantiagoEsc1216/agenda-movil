@@ -22,7 +22,6 @@ import com.example.agendamovil.toolbar.ToolbarFunctions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.List;
-// TODO: Acomodar boton para añadir contacto en vista horizontal
 // TODO: Search configuration
 public class Agenda extends AppCompatActivity {
     LinearLayout scrollContacts;

@@ -19,7 +19,6 @@ import com.example.agendamovil.validators.ValidatorOnTextChange;
 
 public class Profile extends AppCompatActivity {
 
-    // TODO: ScrollView para vista horizontal
 
     LinearLayout name_form, email_form, pass_form;
     Button send_name, send_email, send_pass;

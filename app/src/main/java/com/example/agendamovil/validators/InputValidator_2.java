@@ -5,6 +5,8 @@ import android.text.Editable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+// TODO: 18/12/2020 renombrar a inputValidator 
+// TODO: 18/12/2020 Mensajes de error a recursos string 
 public class InputValidator_2 {
 
     public static final String regexName = "^[a-zA-Zá-ýÁ-Ý0-9\\u00f1\\u00d1\\(\\)+ ]+$";
