@@ -1,11 +1,12 @@
 package com.example.agendamovil;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.os.Build;
 import android.os.Bundle;
-import android.text.Editable;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,17 +15,18 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.example.agendamovil.toolbar.ToolbarFunctions;
-import com.example.agendamovil.validators.InputValidator_2;
+import com.example.agendamovil.validators.InputValidator;
 import com.example.agendamovil.validators.ValidatorOnTextChange;
 
 public class Profile extends AppCompatActivity {
 
+    //TODO: Validar que los formularios no esten vacios
 
     LinearLayout name_form, email_form, pass_form;
     Button send_name, send_email, send_pass;
-    EditText new_name, new_email, new_pass, pass_confim;
+    EditText new_name, new_email, new_pass, pass_confirm;
     ValidatorOnTextChange name_validator, email_validator, pass_validator, confirm_pass;
-    InputValidator_2 inputValidator;
+    InputValidator inputValidator;
     Toolbar toolbar;
 
     @Override
@@ -50,9 +52,9 @@ public class Profile extends AppCompatActivity {
         new_name = (EditText)findViewById(R.id.new_name);
         new_email = (EditText)findViewById(R.id.new_mail);
         new_pass = (EditText)findViewById(R.id.new_pass);
-        pass_confim = (EditText)findViewById(R.id.pass_confirm);
+        pass_confirm = (EditText)findViewById(R.id.pass_confirm);
 
-        inputValidator = new InputValidator_2();
+        inputValidator = new InputValidator();
 
 
     }
@@ -72,7 +74,7 @@ public class Profile extends AppCompatActivity {
                     new_name.setError(null);
                     send_name.setEnabled(true);
                 }else{
-                    new_name.setError("Nombre invalido");
+                    new_name.setError(getString(R.string.name_info));
                 }
             }
         });
@@ -86,7 +88,7 @@ public class Profile extends AppCompatActivity {
                     new_email.setError(null);
                     send_email.setEnabled(true);
                 }else{
-                    new_email.setError("E-Mail invalido");
+                    new_email.setError(getString(R.string.invalid_email));
                 }
             }
         } );
@@ -100,19 +102,19 @@ public class Profile extends AppCompatActivity {
                     new_pass.setError(null);
                     send_pass.setEnabled(true);
                 }else{
-                    new_pass.setError("Contraseña invalida");
+                    new_pass.setError(getString(R.string.pass_info));
                 }
             }
         });
 
-        pass_confim.addTextChangedListener(confirm_pass = new ValidatorOnTextChange() {
+        pass_confirm.addTextChangedListener(confirm_pass = new ValidatorOnTextChange() {
             @Override
             public void validator() {
-                if(inputValidator.confirmPass(new_pass.getText(), pass_confim.getText())){
-                    pass_confim.setError(null);
+                if(inputValidator.confirmPass(new_pass.getText(), pass_confirm.getText())){
+                    pass_confirm.setError(null);
                     send_pass.setEnabled(true);
                 }else{
-                    pass_confim.setError("Las contraseñas no coinciden");
+                    pass_confirm.setError(getString(R.string.pass_not_match));
                 }
             }
         });
@@ -123,7 +125,7 @@ public class Profile extends AppCompatActivity {
         new_name.removeTextChangedListener(name_validator);
         new_email.removeTextChangedListener(email_validator);
         new_pass.removeTextChangedListener(pass_validator);
-        pass_confim.removeTextChangedListener(confirm_pass);
+        pass_confirm.removeTextChangedListener(confirm_pass);
         visibleForm(null);
     }
 

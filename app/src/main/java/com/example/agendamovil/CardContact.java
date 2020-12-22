@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.provider.MediaStore;
-import android.text.Editable;
 import android.text.method.KeyListener;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,16 +13,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.example.agendamovil.validators.InputValidator_2;
+import com.example.agendamovil.validators.InputValidator;
 import com.example.agendamovil.validators.ValidatorOnTextChange;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import static android.app.Activity.RESULT_OK;
 
 public class CardContact extends LinearLayout {
     public String name_contact, phone_contact, img_contact, email_contact;
@@ -32,7 +26,8 @@ public class CardContact extends LinearLayout {
     ImageView img_view;
     Button btn_edit, btn_cancel, btn_accept, btn_delete, btn_img;
     ValidatorOnTextChange name_validator, email_validator, phone_validator;
-    InputValidator_2 inputValidator;
+    InputValidator inputValidator;
+    Context context;
 
     public CardContact(Context context, String name_contact, String phone_contact, String img_contact, String email_contact) {
         super(context);
@@ -41,6 +36,7 @@ public class CardContact extends LinearLayout {
         this.phone_contact = phone_contact;
         this.img_contact = img_contact;
         this.email_contact = email_contact;
+        this.context = context;
         card_values();
     }
 
@@ -48,7 +44,7 @@ public class CardContact extends LinearLayout {
         LayoutInflater li = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         li.inflate(R.layout.card_contact, this, true);
 
-        inputValidator = new InputValidator_2();
+        inputValidator = new InputValidator();
 
         name_card = (EditText)findViewById(R.id.name);
         email_card = (EditText)findViewById(R.id.email);
@@ -95,7 +91,7 @@ public class CardContact extends LinearLayout {
                     name_card.setError(null);
                     btn_accept.setEnabled(true);
                 }else{
-                    name_card.setError("Nombre invalido");
+                    name_card.setError(context.getString(R.string.name_info));
                 }
             }
         });
@@ -107,7 +103,7 @@ public class CardContact extends LinearLayout {
                     email_card.setError(null);
                     btn_accept.setEnabled(true);
                 }else{
-                    email_card.setError("E-Mail invalido");
+                    email_card.setError(context.getString(R.string.invalid_email));
                 }
             }
         });
@@ -119,7 +115,7 @@ public class CardContact extends LinearLayout {
                     phone_card.setError(null);
                     btn_accept.setEnabled(true);
                 }else{
-                    phone_card.setError("Telefono invalido");
+                    phone_card.setError(context.getString(R.string.phone_info));
                 }
             }
         });
@@ -172,24 +168,14 @@ public class CardContact extends LinearLayout {
     }
 
     public void validFormContact(){
-        boolean validName = inputValidator.validName(name_card.getText());
-        boolean validEmail = inputValidator.validEmail(email_card.getText());
-        boolean validPhone = inputValidator.validPhone(phone_card.getText());
-
-        if(validName==false){
-            name_card.setError("Nombre invalido");
-        }
-        if(validEmail==false){
-            email_card.setError("E-Mail Invalido");
-        }
-        if(validPhone==false){
-            phone_card.setError("Telefono invalido");
-        }
-
-        if(validName && validEmail && validPhone){
-            btn_accept.setEnabled(true);
-        }else{
+        if(name_card.getText().toString().matches("") || email_card.getText().toString().matches("") || phone_card.getText().toString().matches("")){
             btn_accept.setEnabled(false);
+        }else{
+            if(name_card.getError()==null && email_card.getError()==null && phone_card.getError()==null){
+                //TODO: Enviar datos
+            }else{
+                btn_accept.setEnabled(false);
+            }
         }
     }
 

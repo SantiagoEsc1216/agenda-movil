@@ -11,14 +11,14 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.agendamovil.toolbar.ToolbarFunctions;
-import com.example.agendamovil.validators.InputValidator_2;
+import com.example.agendamovil.validators.InputValidator;
 import com.example.agendamovil.validators.ValidatorOnTextChange;
 
 public class Signup extends AppCompatActivity {
 
     EditText email, username, pass, confirmPass;
     Button sendButton;
-    InputValidator_2 inputValidator;
+    InputValidator inputValidator;
     Toolbar toolbar;
 
     @Override
@@ -31,7 +31,7 @@ public class Signup extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        inputValidator = new InputValidator_2();
+        inputValidator = new InputValidator();
 
         email = (EditText) findViewById(R.id.singup_email);
         username = (EditText) findViewById(R.id.singup_username);
@@ -47,7 +47,7 @@ public class Signup extends AppCompatActivity {
                     email.setError(null);
                     sendButton.setEnabled(true);
                 }else{
-                    email.setError("E-Mail invalido");
+                    email.setError(getString(R.string.invalid_email));
                 }
             }
         });
@@ -59,7 +59,7 @@ public class Signup extends AppCompatActivity {
                     username.setError(null);
                     sendButton.setEnabled(true);
                 }else{
-                    username.setError("Nombre invalido");
+                    username.setError(getString(R.string.name_info));
                 }
             }
         });
@@ -71,7 +71,7 @@ public class Signup extends AppCompatActivity {
                     pass.setError(null);
                     sendButton.setEnabled(true);
                 }else{
-                    pass.setError("Contraseña invalida");
+                    pass.setError(getString(R.string.pass_info));
                 }
             }
         });
@@ -83,7 +83,7 @@ public class Signup extends AppCompatActivity {
                     confirmPass.setError(null);
                     sendButton.setEnabled(true);
                 }else{
-                    confirmPass.setError("Las contraseñas no coinciden");
+                    confirmPass.setError(getString(R.string.pass_not_match));
                 }
             }
         });
@@ -91,29 +91,15 @@ public class Signup extends AppCompatActivity {
     }
 
     public void validForm(View v){
-
-        boolean validName = inputValidator.validName(username.getText());
-        boolean validEmail = inputValidator.validEmail(email.getText());
-        boolean validPass = inputValidator.validPass(pass.getText());
-        boolean samePass = inputValidator.confirmPass(pass.getText(),confirmPass.getText());
-
-        if (validName == false){
-            username.setError("Nombre no valido");
-        }
-        if (validEmail == false){
-            email.setError("Email invalido");
-        }
-        if (validPass == false){
-            pass.setError("Contraseña invalida");
-        }
-        if (samePass == false){
-            confirmPass.setError("Las contraseñas no coinciden");
-        }
-
-        if(validName && validEmail && validPass && samePass){
-            sendButton.setEnabled(true);
-        }else{
+        if(username.getText().toString().matches("") || email.getText().toString().matches("") || pass.getText().toString().matches("")
+        || confirmPass.getText().toString().matches("")){
             sendButton.setEnabled(false);
+        }else{
+            if(username.getError()==null && email.getError()==null && pass.getError()==null && confirmPass.getError()==null){
+                //TODO: Enviar datos
+            }else{
+                sendButton.setEnabled(false);
+            }
         }
     }
 

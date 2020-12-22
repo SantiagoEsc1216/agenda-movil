@@ -16,7 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.agendamovil.toolbar.ToolbarFunctions;
-import com.example.agendamovil.validators.InputValidator_2;
+import com.example.agendamovil.validators.InputValidator;
 import com.example.agendamovil.validators.ValidatorOnTextChange;
 
 import java.io.FileNotFoundException;
@@ -27,7 +27,7 @@ public class new_contact extends AppCompatActivity {
     EditText name, email, phone;
     Button upload_img, btnNewContact;
     ImageView img_contact;
-    InputValidator_2 inputValidator;
+    InputValidator inputValidator;
     Toolbar toolbar;
 
     @Override
@@ -48,7 +48,7 @@ public class new_contact extends AppCompatActivity {
         btnNewContact = (Button)findViewById(R.id.btn_new_contact) ;
         img_contact = (ImageView)findViewById(R.id.imgContact);
 
-        inputValidator = new InputValidator_2();
+        inputValidator = new InputValidator();
 
 
         name.addTextChangedListener(new ValidatorOnTextChange() {
@@ -58,7 +58,7 @@ public class new_contact extends AppCompatActivity {
                     name.setError(null);
                     btnNewContact.setEnabled(true);
                 }else{
-                    name.setError("Nombre invalido");
+                    name.setError(getString(R.string.name_info));
                 }
             }
         });
@@ -70,7 +70,7 @@ public class new_contact extends AppCompatActivity {
                     email.setError(null);
                     btnNewContact.setEnabled(true);
                 }else{
-                    email.setError("Nombre invalido");
+                    email.setError(getString(R.string.invalid_email));
                 }
             }
         });
@@ -82,7 +82,7 @@ public class new_contact extends AppCompatActivity {
                     phone.setError(null);
                     btnNewContact.setEnabled(true);
                 }else{
-                    phone.setError("Nombre invalido");
+                    phone.setError(getString(R.string.phone_info));
                 }
             }
         });
@@ -115,25 +115,16 @@ public class new_contact extends AppCompatActivity {
   }
 
   public void validNewContactForm(View v){
-      boolean validName = inputValidator.validName(name.getText());
-      boolean validEmail = inputValidator.validEmail(email.getText());
-      boolean validPhone = inputValidator.validPhone(phone.getText());
 
-      if(validName==false){
-          name.setError("Nombre invalido");
-      }
-      if(validEmail==false){
-          email.setError("E-Mail Invalido");
-      }
-      if(validPhone==false){
-          phone.setError("Telefono invalido");
-      }
-
-      if(validName && validEmail && validPhone){
-          btnNewContact.setEnabled(true);
-      }else{
-          btnNewContact.setEnabled(false);
-      }
+        if(name.getText().toString().matches("") || email.getText().toString().matches("") || phone.getText().toString().matches("")){
+            btnNewContact.setEnabled(false);
+        }else{
+            if(name.getError()==null && email.getError()==null && phone.getError()==null){
+                //TODO: Enviar datos
+            }else{
+                btnNewContact.setEnabled(false);
+            }
+        }
   }
 
     @Override

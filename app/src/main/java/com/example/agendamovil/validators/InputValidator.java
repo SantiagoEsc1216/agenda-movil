@@ -6,8 +6,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 // TODO: 18/12/2020 renombrar a inputValidator 
-// TODO: 18/12/2020 Mensajes de error a recursos string 
-public class InputValidator_2 {
+// TODO: 18/12/2020 Mensajes de error a recursos string
+
+public class InputValidator {
 
     public static final String regexName = "^[a-zA-Zá-ýÁ-Ý0-9\\u00f1\\u00d1\\(\\)+ ]+$";
     public static final String regexEmail = "^([a-zA-Z-0-9_\\.-]+)@([a-z_\\.-]+)\\.([a-z\\.]{2,6})$";

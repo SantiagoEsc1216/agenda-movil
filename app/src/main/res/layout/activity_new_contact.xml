@@ -202,7 +202,7 @@
                 android:layout_marginBottom="16dp"
                 android:background="#FFFFFF"
                 android:backgroundTint="#0275d8"
-                android:enabled="false"
+                android:enabled="true"
                 android:onClick="validNewContactForm"
                 android:text="@string/create_contact"
                 android:textColor="#FFFFFF"
