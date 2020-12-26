@@ -14,12 +14,16 @@ import com.example.agendamovil.toolbar.ToolbarFunctions;
 import com.example.agendamovil.validators.InputValidator;
 import com.example.agendamovil.validators.ValidatorOnTextChange;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Signup extends AppCompatActivity {
 
     EditText email, username, pass, confirmPass;
     Button sendButton;
     InputValidator inputValidator;
     Toolbar toolbar;
+    List<EditText> inputs = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,68 +42,46 @@ public class Signup extends AppCompatActivity {
         pass = (EditText) findViewById(R.id.singup_pass);
         confirmPass = (EditText) findViewById(R.id.singup_pass_confirm);
 
+        inputs.add(email);
+        inputs.add(username);
+        inputs.add(pass);
+        inputs.add(confirmPass);
+
         sendButton = (Button) findViewById(R.id.singup_send);
 
-        email.addTextChangedListener(new ValidatorOnTextChange() {
+        email.addTextChangedListener(new ValidatorOnTextChange(email, InputValidator.email, getString(R.string.invalid_email)) {
             @Override
             public void validator() {
-                if(inputValidator.validEmail(email.getText())){
-                    email.setError(null);
-                    sendButton.setEnabled(true);
-                }else{
-                    email.setError(getString(R.string.invalid_email));
-                }
+                super.validator();
             }
         });
 
-        username.addTextChangedListener(new ValidatorOnTextChange() {
+        username.addTextChangedListener(new ValidatorOnTextChange(username, InputValidator.name, getString(R.string.name_info)) {
             @Override
             public void validator() {
-                if(inputValidator.validName(username.getText())){
-                    username.setError(null);
-                    sendButton.setEnabled(true);
-                }else{
-                    username.setError(getString(R.string.name_info));
-                }
+                super.validator();
             }
         });
 
-        pass.addTextChangedListener(new ValidatorOnTextChange() {
+        pass.addTextChangedListener(new ValidatorOnTextChange(pass, InputValidator.password, getString(R.string.pass_info)) {
             @Override
             public void validator() {
-                if(inputValidator.validPass(pass.getText())){
-                    pass.setError(null);
-                    sendButton.setEnabled(true);
-                }else{
-                    pass.setError(getString(R.string.pass_info));
-                }
+                super.validator();
             }
         });
 
-        confirmPass.addTextChangedListener(new ValidatorOnTextChange() {
+        confirmPass.addTextChangedListener(new ValidatorOnTextChange(confirmPass, "^"+pass.getText().toString()+"$", getString(R.string.pass_not_match)) {
             @Override
             public void validator() {
-                if(inputValidator.confirmPass(pass.getText(), confirmPass.getText())){
-                    confirmPass.setError(null);
-                    sendButton.setEnabled(true);
-                }else{
-                    confirmPass.setError(getString(R.string.pass_not_match));
-                }
+                super.validator();
             }
         });
 
     }
 
     public void validForm(View v){
-        if(username.getText().toString().matches("") || email.getText().toString().matches("") || pass.getText().toString().matches("")
-        || confirmPass.getText().toString().matches("")){
-            sendButton.setEnabled(false);
-        }else{
-            if(username.getError()==null && email.getError()==null && pass.getError()==null && confirmPass.getError()==null){
-                //TODO: Enviar datos
-            }else{
-                sendButton.setEnabled(false);
-            }
+        if(inputValidator.validForm(inputs)){
+            //TODO: Subir datos
         }
     }
 

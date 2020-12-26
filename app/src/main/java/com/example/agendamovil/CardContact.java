@@ -18,6 +18,7 @@ import com.example.agendamovil.validators.ValidatorOnTextChange;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CardContact extends LinearLayout {
@@ -28,6 +29,7 @@ public class CardContact extends LinearLayout {
     ValidatorOnTextChange name_validator, email_validator, phone_validator;
     InputValidator inputValidator;
     Context context;
+    List<EditText> inputs = new ArrayList<>();
 
     public CardContact(Context context, String name_contact, String phone_contact, String img_contact, String email_contact) {
         super(context);
@@ -50,6 +52,10 @@ public class CardContact extends LinearLayout {
         email_card = (EditText)findViewById(R.id.email);
         phone_card =(EditText)findViewById(R.id.phone);
         img_view = (ImageView)findViewById(R.id.img_view);
+
+        inputs.add(name_card);
+        inputs.add(email_card);
+        inputs.add(phone_card);
 
         btn_edit = (Button)findViewById(R.id.btn_edit);
         btn_delete = (Button)findViewById(R.id.btn_delete);
@@ -84,40 +90,21 @@ public class CardContact extends LinearLayout {
         email_card.setKeyListener((KeyListener) name_card.getTag());
         phone_card.setKeyListener((KeyListener)phone_card.getTag());
 
-        name_card.addTextChangedListener(name_validator = new ValidatorOnTextChange() {
+        name_card.addTextChangedListener(name_validator = new ValidatorOnTextChange(name_card, InputValidator.name, context.getString(R.string.name_info)){
             @Override
             public void validator() {
-                if(inputValidator.validName(name_card.getText())){
-                    name_card.setError(null);
-                    btn_accept.setEnabled(true);
-                }else{
-                    name_card.setError(context.getString(R.string.name_info));
-                }
+                super.validator();
+            }
+        });
+        email_card.addTextChangedListener(email_validator = new ValidatorOnTextChange(email_card, InputValidator.email, context.getString(R.string.invalid_email)){
+            @Override
+            public void validator() {
+                super.validator();
             }
         });
 
-        email_card.addTextChangedListener(email_validator = new ValidatorOnTextChange() {
-            @Override
-            public void validator() {
-                if(inputValidator.validEmail(email_card.getText())){
-                    email_card.setError(null);
-                    btn_accept.setEnabled(true);
-                }else{
-                    email_card.setError(context.getString(R.string.invalid_email));
-                }
-            }
-        });
+        phone_card.addTextChangedListener(phone_validator = new ValidatorOnTextChange(phone_card, InputValidator.phone, context.getString(R.string.phone_info)) {
 
-        phone_card.addTextChangedListener(phone_validator = new ValidatorOnTextChange() {
-            @Override
-            public void validator() {
-                if (inputValidator.validPhone(phone_card.getText())){
-                    phone_card.setError(null);
-                    btn_accept.setEnabled(true);
-                }else{
-                    phone_card.setError(context.getString(R.string.phone_info));
-                }
-            }
         });
 
         btn_delete.setVisibility(View.GONE);
@@ -168,15 +155,9 @@ public class CardContact extends LinearLayout {
     }
 
     public void validFormContact(){
-        if(name_card.getText().toString().matches("") || email_card.getText().toString().matches("") || phone_card.getText().toString().matches("")){
-            btn_accept.setEnabled(false);
-        }else{
-            if(name_card.getError()==null && email_card.getError()==null && phone_card.getError()==null){
-                //TODO: Enviar datos
-            }else{
-                btn_accept.setEnabled(false);
-            }
-        }
+      if (inputValidator.validForm(inputs)){
+        //TODO: Subir datos
+      }
     }
 
     private void card_values(){

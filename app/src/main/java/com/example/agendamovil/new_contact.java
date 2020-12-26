@@ -21,6 +21,8 @@ import com.example.agendamovil.validators.ValidatorOnTextChange;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 public class new_contact extends AppCompatActivity {
 
@@ -29,6 +31,7 @@ public class new_contact extends AppCompatActivity {
     ImageView img_contact;
     InputValidator inputValidator;
     Toolbar toolbar;
+    List<EditText> inputs = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,43 +51,29 @@ public class new_contact extends AppCompatActivity {
         btnNewContact = (Button)findViewById(R.id.btn_new_contact) ;
         img_contact = (ImageView)findViewById(R.id.imgContact);
 
+        inputs.add(name);
+        inputs.add(email);
+        inputs.add(phone);
+
         inputValidator = new InputValidator();
 
 
-        name.addTextChangedListener(new ValidatorOnTextChange() {
+        name.addTextChangedListener(new ValidatorOnTextChange(name, InputValidator.name, getString(R.string.name_info)){
             @Override
             public void validator() {
-                if(inputValidator.validName(name.getText())){
-                    name.setError(null);
-                    btnNewContact.setEnabled(true);
-                }else{
-                    name.setError(getString(R.string.name_info));
-                }
+                super.validator();
             }
         });
 
-        email.addTextChangedListener(new ValidatorOnTextChange() {
+        email.addTextChangedListener(new ValidatorOnTextChange(email, InputValidator.email,getString(R.string.invalid_email)){
             @Override
             public void validator() {
-                if(inputValidator.validEmail(email.getText())){
-                    email.setError(null);
-                    btnNewContact.setEnabled(true);
-                }else{
-                    email.setError(getString(R.string.invalid_email));
-                }
+                super.validator();
             }
         });
 
-        phone.addTextChangedListener(new ValidatorOnTextChange() {
-            @Override
-            public void validator() {
-                if(inputValidator.validPhone(phone.getText())){
-                    phone.setError(null);
-                    btnNewContact.setEnabled(true);
-                }else{
-                    phone.setError(getString(R.string.phone_info));
-                }
-            }
+        phone.addTextChangedListener(new ValidatorOnTextChange(phone, InputValidator.phone, getString(R.string.phone_info)){
+
         });
 
     }
@@ -116,14 +105,8 @@ public class new_contact extends AppCompatActivity {
 
   public void validNewContactForm(View v){
 
-        if(name.getText().toString().matches("") || email.getText().toString().matches("") || phone.getText().toString().matches("")){
-            btnNewContact.setEnabled(false);
-        }else{
-            if(name.getError()==null && email.getError()==null && phone.getError()==null){
-                //TODO: Enviar datos
-            }else{
-                btnNewContact.setEnabled(false);
-            }
+        if(inputValidator.validForm(inputs)){
+            //TODO: subir datos
         }
   }
 

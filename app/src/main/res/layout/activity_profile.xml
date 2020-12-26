@@ -28,8 +28,11 @@
             android:layout_marginEnd="16dp"
             android:orientation="vertical">
 
+            <LinearLayout android:id="@+id/layout_name_change"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
             <LinearLayout
-                android:id="@+id/name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
@@ -47,208 +50,63 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0"
-                    android:onClick="visibleName"
+                    android:onClick="visibleFormName"
                     android:text="@string/edit" />
 
             </LinearLayout>
-            <LinearLayout android:id="@+id/name_form"
+        </LinearLayout>
+
+            <LinearLayout android:id="@+id/layout_email_change"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0"
-                android:visibility="gone"
-                android:orientation="vertical">
+                android:layout_height="wrap_content">
 
-                <TextView
-                    android:id="@+id/new_name_label"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/new_name" />
+                    android:orientation="horizontal">
 
-                <EditText
-                    android:id="@+id/new_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:inputType="textPersonName"
-                    android:text="" />
+                    <TextView
+                        android:id="@+id/user_email"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/prompt_email" />
 
-                <TextView
-                    android:id="@+id/pass_label_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/prompt_password" />
+                    <Button
+                        android:id="@+id/btn_email"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0"
+                        android:onClick="visibleEmail"
+                        android:text="@string/edit" />
 
-                <EditText
-                    android:id="@+id/pass_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:inputType="textPassword" />
+                </LinearLayout>
 
-                <Button
-                    android:id="@+id/change_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="#5cb85c"
-                    android:text="@string/accept" />
-
-                <Button
-                    android:id="@+id/cancel_name"
-                    android:onClick="cancelForm"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="#d9534f"
-                    android:text="@string/cancel" />
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/email"
+            <LinearLayout android:id="@+id/layout_pass_change"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content">
 
-                <TextView
-                    android:id="@+id/user_email"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/prompt_email" />
-
-                <Button
-                    android:id="@+id/btn_email"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="65dp"
+                    android:layout_marginTop="16dp"
                     android:layout_weight="0"
-                    android:onClick="visibleEmail"
-                    android:text="@string/edit" />
+                    android:orientation="horizontal">
 
-            </LinearLayout>
-            <LinearLayout android:id="@+id/email_form"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0"
-                android:visibility="gone"
-                android:orientation="vertical">
+                    <Button
+                        android:id="@+id/btn_pass"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:onClick="visiblePass"
+                        android:text="@string/change_pass" />
 
-                <TextView
-                    android:id="@+id/new_mail_label"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/new_email" />
-
-                <EditText
-                    android:id="@+id/new_mail"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:inputType="textEmailAddress"
-                    android:text="" />
-
-                <TextView
-                    android:id="@+id/pass_label_mail"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/prompt_password" />
-
-                <EditText
-                    android:id="@+id/pass_mail"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:inputType="textPassword" />
-
-                <Button
-                    android:id="@+id/change_email"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="#5cb85c"
-                    android:text="@string/accept" />
-
-                <Button
-                    android:id="@+id/cancel_email"
-                    android:onClick="cancelForm"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="#d9534f"
-                    android:text="@string/cancel" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="65dp"
-                android:layout_marginTop="16dp"
-                android:layout_weight="0"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/btn_pass"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:onClick="visiblePass"
-                    android:text="@string/change_pass" />
-            </LinearLayout>
-            <LinearLayout android:id="@+id/pass_form"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0"
-                android:visibility="gone"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/new_pass_label"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/new_pass" />
-                <EditText
-                    android:id="@+id/new_pass"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:inputType="textPassword"
-                    android:text="" />
-
-                <TextView
-                    android:id="@+id/pass_label_confirm"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/password_confirm" />
-                <EditText
-                    android:id="@+id/pass_confirm"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:inputType="textPassword" />
-
-                <TextView
-                    android:id="@+id/pass_label_pass"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/prompt_password" />
-                <EditText
-                    android:id="@+id/pass_pass"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:inputType="textPassword" />
-
-                <Button
-                    android:id="@+id/change_pass"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="#5cb85c"
-                    android:text="@string/accept" />
-                <Button
-                    android:onClick="cancelForm"
-                    android:id="@+id/cancel_pass"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="#d9534f"
-                    android:text="@string/cancel" />
+                </LinearLayout>
             </LinearLayout>
 
         </LinearLayout>
     </ScrollView>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

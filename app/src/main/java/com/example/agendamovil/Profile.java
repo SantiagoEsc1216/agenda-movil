@@ -1,18 +1,22 @@
 package com.example.agendamovil;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
-import android.os.Build;
+import android.content.Context;
 import android.os.Bundle;
+import android.text.Layout;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.agendamovil.toolbar.ToolbarFunctions;
 import com.example.agendamovil.validators.InputValidator;
@@ -22,10 +26,11 @@ public class Profile extends AppCompatActivity {
 
     //TODO: Validar que los formularios no esten vacios
 
-    LinearLayout name_form, email_form, pass_form;
-    Button send_name, send_email, send_pass;
-    EditText new_name, new_email, new_pass, pass_confirm;
-    ValidatorOnTextChange name_validator, email_validator, pass_validator, confirm_pass;
+    LinearLayout name_layout, email_layout, pass_layout, form_layout;
+    Button send_button, cancel_button;
+    EditText change_input, pass, pass_confirm;
+    TextView tv_change_input, tv_pass_confirm;
+    ValidatorOnTextChange change_input_listener;
     InputValidator inputValidator;
     Toolbar toolbar;
 
@@ -40,93 +45,36 @@ public class Profile extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(getDrawable(R.drawable.baseline_home_white_18dp));
 
+        tv_change_input = (TextView) findViewById(R.id.profile_label_1);
+        tv_pass_confirm = (TextView)findViewById(R.id.profile_label_2);
 
-        name_form = (LinearLayout) findViewById(R.id.name_form);
-        email_form = (LinearLayout) findViewById(R.id.email_form);
-        pass_form = (LinearLayout) findViewById(R.id.pass_form);
+        name_layout = (LinearLayout) findViewById(R.id.layout_name_change);
+        email_layout = (LinearLayout) findViewById(R.id.layout_email_change);
+        pass_layout = (LinearLayout) findViewById(R.id.layout_pass_change);
+        form_layout = (LinearLayout)findViewById(R.id.layout_profile_form);
 
-        send_name = (Button) findViewById(R.id.change_name);
-        send_email = (Button)findViewById(R.id.change_email);
-        send_pass = (Button)findViewById(R.id.change_pass);
+        send_button = (Button)findViewById(R.id.button_profile_upload);
+        cancel_button = (Button)findViewById(R.id.button_profile_cancel);
 
-        new_name = (EditText)findViewById(R.id.new_name);
-        new_email = (EditText)findViewById(R.id.new_mail);
-        new_pass = (EditText)findViewById(R.id.new_pass);
-        pass_confirm = (EditText)findViewById(R.id.pass_confirm);
+        change_input = (EditText)findViewById(R.id.input_profile_change);
+        pass_confirm = (EditText)findViewById(R.id.input_profile_confirmpass);
+        pass = (EditText)findViewById(R.id.input_profile_pass);
 
         inputValidator = new InputValidator();
 
+    }
 
-    }
-    private  void visibleForm(LinearLayout visible_form){
-        name_form.setVisibility(View.GONE);
-        email_form.setVisibility(View.GONE);
-        pass_form.setVisibility(View.GONE);
-        if(visible_form != null){
-            visible_form.setVisibility(View.VISIBLE);
-        }
-    }
-    public void visibleName(View v){
-        new_name.addTextChangedListener(name_validator =  new ValidatorOnTextChange() {
-            @Override
-            public void validator() {
-                if(inputValidator.validName(new_name.getText())){
-                    new_name.setError(null);
-                    send_name.setEnabled(true);
-                }else{
-                    new_name.setError(getString(R.string.name_info));
-                }
-            }
-        });
-        visibleForm(name_form);
-    }
-    public void visibleEmail(View v){
-        new_email.addTextChangedListener(email_validator = new ValidatorOnTextChange() {
-            @Override
-            public void validator() {
-                if (inputValidator.validEmail(new_email.getText())){
-                    new_email.setError(null);
-                    send_email.setEnabled(true);
-                }else{
-                    new_email.setError(getString(R.string.invalid_email));
-                }
-            }
-        } );
-        visibleForm(email_form);
-    }
-    public void visiblePass(View v){
-        new_pass.addTextChangedListener(pass_validator = new ValidatorOnTextChange() {
-            @Override
-            public void validator() {
-                if(inputValidator.validPass(new_pass.getText())){
-                    new_pass.setError(null);
-                    send_pass.setEnabled(true);
-                }else{
-                    new_pass.setError(getString(R.string.pass_info));
-                }
-            }
-        });
 
-        pass_confirm.addTextChangedListener(confirm_pass = new ValidatorOnTextChange() {
-            @Override
-            public void validator() {
-                if(inputValidator.confirmPass(new_pass.getText(), pass_confirm.getText())){
-                    pass_confirm.setError(null);
-                    send_pass.setEnabled(true);
-                }else{
-                    pass_confirm.setError(getString(R.string.pass_not_match));
-                }
-            }
-        });
-        visibleForm(pass_form);
-    }
+
 
     public void cancelForm(View v){
-        new_name.removeTextChangedListener(name_validator);
-        new_email.removeTextChangedListener(email_validator);
-        new_pass.removeTextChangedListener(pass_validator);
-        pass_confirm.removeTextChangedListener(confirm_pass);
-        visibleForm(null);
+       change_input.removeTextChangedListener(change_input_listener);
+        tv_pass_confirm.setVisibility(View.GONE);
+        pass_confirm.setVisibility(View.GONE);
+        change_input.setText("");
+        pass.setText("");
+        pass_confirm.setText("");
+        form_layout.setVisibility(View.GONE);
     }
 
     @Override
