@@ -8,6 +8,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.Layout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,17 +23,17 @@ import com.example.agendamovil.toolbar.ToolbarFunctions;
 import com.example.agendamovil.validators.InputValidator;
 import com.example.agendamovil.validators.ValidatorOnTextChange;
 
+import java.io.Console;
+import java.util.jar.Attributes;
+
 public class Profile extends AppCompatActivity {
 
     //TODO: Validar que los formularios no esten vacios
 
-    LinearLayout name_layout, email_layout, pass_layout, form_layout;
-    Button send_button, cancel_button;
-    EditText change_input, pass, pass_confirm;
-    TextView tv_change_input, tv_pass_confirm;
-    ValidatorOnTextChange change_input_listener;
-    InputValidator inputValidator;
+    LinearLayout name_layout, email_layout, pass_layout;
+    Button name_button, email_button, psss_button;
     Toolbar toolbar;
+    FormProfile name_form, email_form, pass_form;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,36 +46,47 @@ public class Profile extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(getDrawable(R.drawable.baseline_home_white_18dp));
 
-        tv_change_input = (TextView) findViewById(R.id.profile_label_1);
-        tv_pass_confirm = (TextView)findViewById(R.id.profile_label_2);
+        name_button = findViewById(R.id.profile_btn_name);
+        email_button = findViewById(R.id.profile_btn_email);
+        psss_button = findViewById(R.id.profile_btn_pass);
 
         name_layout = (LinearLayout) findViewById(R.id.layout_name_change);
         email_layout = (LinearLayout) findViewById(R.id.layout_email_change);
         pass_layout = (LinearLayout) findViewById(R.id.layout_pass_change);
-        form_layout = (LinearLayout)findViewById(R.id.layout_profile_form);
 
-        send_button = (Button)findViewById(R.id.button_profile_upload);
-        cancel_button = (Button)findViewById(R.id.button_profile_cancel);
+        name_form = new FormProfile(this, FormProfile.CHANGE_NAME);
+        email_form = new FormProfile(this, FormProfile.CHANGE_EMAIL);
+        pass_form = new FormProfile(this, FormProfile.CHANGE_PASS);
 
-        change_input = (EditText)findViewById(R.id.input_profile_change);
-        pass_confirm = (EditText)findViewById(R.id.input_profile_confirmpass);
-        pass = (EditText)findViewById(R.id.input_profile_pass);
+        name_button.setOnClickListener(v -> {
+            try {
+                name_layout.addView(name_form);
+                name_form.setVisibility(View.VISIBLE);
 
-        inputValidator = new InputValidator();
+            } catch (Exception e) {
+                name_form.setVisibility(View.VISIBLE);
+            }
+        });
 
-    }
+        email_button.setOnClickListener(v -> {
+            try {
+                email_layout.addView(email_form);
+                email_form.setVisibility(View.VISIBLE);
 
+            }catch (Exception e){
+                email_form.setVisibility(View.VISIBLE);
+            }
+        });
 
+        psss_button.setOnClickListener(v -> {
+            try {
+                pass_layout.addView(pass_form);
+                pass_form.setVisibility(View.VISIBLE);
+            }catch (Exception e){
+                pass_form.setVisibility(View.VISIBLE);
+            }
+        });
 
-
-    public void cancelForm(View v){
-       change_input.removeTextChangedListener(change_input_listener);
-        tv_pass_confirm.setVisibility(View.GONE);
-        pass_confirm.setVisibility(View.GONE);
-        change_input.setText("");
-        pass.setText("");
-        pass_confirm.setText("");
-        form_layout.setVisibility(View.GONE);
     }
 
     @Override

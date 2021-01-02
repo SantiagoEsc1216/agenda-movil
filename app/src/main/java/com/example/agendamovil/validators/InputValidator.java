@@ -28,16 +28,6 @@ public class InputValidator {
         }
     }
 
-    public boolean confirmPass(Editable password, Editable passwordConfirm){
-        Pattern pattern = Pattern.compile("^"+password.toString()+"$");
-        boolean match = pattern.matcher(passwordConfirm).find();
-
-        if (match){
-            return true;
-        }else{
-            return false;
-        }
-    }
 
     public boolean validForm(List<EditText> inputs){
         int errors = 0;

@@ -90,20 +90,20 @@ public class CardContact extends LinearLayout {
         email_card.setKeyListener((KeyListener) name_card.getTag());
         phone_card.setKeyListener((KeyListener)phone_card.getTag());
 
-        name_card.addTextChangedListener(name_validator = new ValidatorOnTextChange(name_card, InputValidator.name, context.getString(R.string.name_info)){
+        name_card.addTextChangedListener(name_validator = new ValidatorOnTextChange(context, name_card, InputValidator.name){
             @Override
             public void validator() {
                 super.validator();
             }
         });
-        email_card.addTextChangedListener(email_validator = new ValidatorOnTextChange(email_card, InputValidator.email, context.getString(R.string.invalid_email)){
+        email_card.addTextChangedListener(email_validator = new ValidatorOnTextChange(context, email_card, InputValidator.email){
             @Override
             public void validator() {
                 super.validator();
             }
         });
 
-        phone_card.addTextChangedListener(phone_validator = new ValidatorOnTextChange(phone_card, InputValidator.phone, context.getString(R.string.phone_info)) {
+        phone_card.addTextChangedListener(phone_validator = new ValidatorOnTextChange(context, phone_card, InputValidator.phone) {
 
         });
 

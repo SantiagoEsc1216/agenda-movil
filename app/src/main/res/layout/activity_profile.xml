@@ -30,6 +30,7 @@
 
             <LinearLayout android:id="@+id/layout_name_change"
             android:layout_width="match_parent"
+                android:orientation="vertical"
             android:layout_height="wrap_content">
 
             <LinearLayout
@@ -46,11 +47,10 @@
                     android:text="@string/username" />
 
                 <Button
-                    android:id="@+id/btn_name"
+                    android:id="@+id/profile_btn_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0"
-                    android:onClick="visibleFormName"
                     android:text="@string/edit" />
 
             </LinearLayout>
@@ -58,6 +58,7 @@
 
             <LinearLayout android:id="@+id/layout_email_change"
                 android:layout_width="match_parent"
+                android:orientation="vertical"
                 android:layout_height="wrap_content">
 
                 <LinearLayout
@@ -73,11 +74,10 @@
                         android:text="@string/prompt_email" />
 
                     <Button
-                        android:id="@+id/btn_email"
+                        android:id="@+id/profile_btn_email"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="0"
-                        android:onClick="visibleEmail"
                         android:text="@string/edit" />
 
                 </LinearLayout>
@@ -85,6 +85,7 @@
             </LinearLayout>
 
             <LinearLayout android:id="@+id/layout_pass_change"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -96,11 +97,10 @@
                     android:orientation="horizontal">
 
                     <Button
-                        android:id="@+id/btn_pass"
+                        android:id="@+id/profile_btn_pass"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:onClick="visiblePass"
                         android:text="@string/change_pass" />
 
                 </LinearLayout>

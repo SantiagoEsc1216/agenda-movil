@@ -58,21 +58,21 @@ public class new_contact extends AppCompatActivity {
         inputValidator = new InputValidator();
 
 
-        name.addTextChangedListener(new ValidatorOnTextChange(name, InputValidator.name, getString(R.string.name_info)){
+        name.addTextChangedListener(new ValidatorOnTextChange(this, name, InputValidator.name){
             @Override
             public void validator() {
                 super.validator();
             }
         });
 
-        email.addTextChangedListener(new ValidatorOnTextChange(email, InputValidator.email,getString(R.string.invalid_email)){
+        email.addTextChangedListener(new ValidatorOnTextChange(this, email, InputValidator.email){
             @Override
             public void validator() {
                 super.validator();
             }
         });
 
-        phone.addTextChangedListener(new ValidatorOnTextChange(phone, InputValidator.phone, getString(R.string.phone_info)){
+        phone.addTextChangedListener(new ValidatorOnTextChange(this, phone, InputValidator.phone){
 
         });
 

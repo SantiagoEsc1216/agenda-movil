@@ -20,8 +20,7 @@
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".Agenda"
+        <activity android:name=".Agenda"
             android:label="Agenda">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -30,8 +29,7 @@
             <meta-data android:name="android.app.searchable"
                 android:resource="@xml/searchable"/>
         </activity>
-        <activity
-            android:name=".Profile"
+        <activity android:name=".Profile"
             android:label="Perfil">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -39,8 +37,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".new_contact"
+        <activity android:name=".new_contact"
             android:label="Nuevo contacto">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -48,8 +45,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".ui.login.LoginActivity"
+        <activity android:name=".ui.login.LoginActivity"
             android:label="Iniciar sesion">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

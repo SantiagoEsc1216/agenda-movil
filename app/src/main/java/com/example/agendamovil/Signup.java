@@ -49,28 +49,35 @@ public class Signup extends AppCompatActivity {
 
         sendButton = (Button) findViewById(R.id.singup_send);
 
-        email.addTextChangedListener(new ValidatorOnTextChange(email, InputValidator.email, getString(R.string.invalid_email)) {
+        email.addTextChangedListener(new ValidatorOnTextChange(this, email, InputValidator.email) {
             @Override
             public void validator() {
                 super.validator();
             }
         });
 
-        username.addTextChangedListener(new ValidatorOnTextChange(username, InputValidator.name, getString(R.string.name_info)) {
+        username.addTextChangedListener(new ValidatorOnTextChange(this, username, InputValidator.name) {
             @Override
             public void validator() {
                 super.validator();
             }
         });
 
-        pass.addTextChangedListener(new ValidatorOnTextChange(pass, InputValidator.password, getString(R.string.pass_info)) {
+        pass.addTextChangedListener(new ValidatorOnTextChange(this, pass, InputValidator.password) {
             @Override
             public void validator() {
                 super.validator();
             }
         });
 
-        confirmPass.addTextChangedListener(new ValidatorOnTextChange(confirmPass, "^"+pass.getText().toString()+"$", getString(R.string.pass_not_match)) {
+        pass.addTextChangedListener(new ValidatorOnTextChange(this ,pass, confirmPass, InputValidator.pass_confirm){
+            @Override
+            public void validator() {
+                super.validator();
+            }
+        });
+
+        confirmPass.addTextChangedListener(new ValidatorOnTextChange(this ,pass, confirmPass, InputValidator.pass_confirm){
             @Override
             public void validator() {
                 super.validator();
