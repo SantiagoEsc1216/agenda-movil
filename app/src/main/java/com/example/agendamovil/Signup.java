@@ -43,7 +43,9 @@ public class Signup extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
-
+        if(BackendConnexion.isLogged(this)){
+            startActivity(BackendConnexion.start_agenda);
+        }
         body = findViewById(R.id.singup_body);
 
         toolbar = findViewById(R.id.toolbar_custom);

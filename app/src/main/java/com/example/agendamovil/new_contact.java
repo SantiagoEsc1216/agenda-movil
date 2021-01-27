@@ -57,6 +57,10 @@ public class new_contact extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_contact);
 
+        if(BackendConnexion.isLogged(this) == false){
+            startActivity(BackendConnexion.go_login);
+        }
+
         body = findViewById(R.id.body_new_contact);
 
         session = getSharedPreferences("com.example.agendamovil", MODE_PRIVATE);

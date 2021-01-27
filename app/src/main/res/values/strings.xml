@@ -1,4 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
+
+    <string name="app_name">Agenda mobile</string>
+
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>

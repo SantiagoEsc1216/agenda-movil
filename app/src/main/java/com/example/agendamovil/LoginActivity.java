@@ -42,14 +42,12 @@ public class LoginActivity extends AppCompatActivity {
     InputValidator inputValidator = new InputValidator();
 
     public void onCreate(Bundle savedInstanceState) {
-        session = this.getSharedPreferences("com.example.agendamovil", MODE_PRIVATE);
-        startAgenda = new Intent(getApplicationContext(), Agenda.class);
-
-        if(session.getBoolean("logged", false)){
-            startActivity(startAgenda);
-        }
         super.onCreate(savedInstanceState);
+        if(BackendConnexion.isLogged(this)){
+            startActivity(BackendConnexion.start_agenda);
+        }
         setContentView(R.layout.activity_login);
+        session = getSharedPreferences("com.example.agendamovil", MODE_PRIVATE);
         body = findViewById(R.id.login_body);
         toolbar = findViewById(R.id.toolbar_custom);
         toolbar.setTitle(R.string.action_sign_in_short);
@@ -102,8 +100,8 @@ public class LoginActivity extends AppCompatActivity {
                             editor.putString("username", username);
                             editor.putBoolean("logged", true);
                            editor.apply();
-                            if(session.getBoolean("logged", false)){
-                                startActivity(startAgenda);
+                            if(BackendConnexion.isLogged(getApplicationContext())){
+                                startActivity(BackendConnexion.start_agenda);
                             }
                             break;
                         case "incorrect password":

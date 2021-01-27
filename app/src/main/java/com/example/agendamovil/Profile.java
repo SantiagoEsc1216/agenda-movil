@@ -25,6 +25,7 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
+import com.example.agendamovil.session.BackendConnexion;
 import com.example.agendamovil.toolbar.ToolbarFunctions;
 import com.example.agendamovil.validators.InputValidator;
 import com.example.agendamovil.validators.ValidatorOnTextChange;
@@ -57,6 +58,10 @@ public class Profile extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
 
         body = findViewById(R.id.profile_body);
+
+        if(BackendConnexion.isLogged(this) == false){
+            startActivity(BackendConnexion.go_login);
+        }
 
         preferences = this.getSharedPreferences("com.example.agendamovil",MODE_PRIVATE);
         session_username =  preferences.getString("username", "error");

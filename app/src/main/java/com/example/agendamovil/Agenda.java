@@ -55,6 +55,9 @@ public class Agenda extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if(BackendConnexion.isLogged(this) == false){
+            startActivity(BackendConnexion.go_login);
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_agenda);
         session = getSharedPreferences("com.example.agendamovil", MODE_PRIVATE);

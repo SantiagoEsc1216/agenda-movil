@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -17,12 +18,16 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.agendamovil.Agenda;
 import com.example.agendamovil.CustomRequest;
+import com.example.agendamovil.LoginActivity;
 import com.example.agendamovil.ProgressBarAgenda;
 import com.example.agendamovil.R;
 import com.example.agendamovil.validators.InputValidator;
 
 import java.util.Map;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class BackendConnexion {
     public static final String LOGIN = "login_api.php";
@@ -36,6 +41,8 @@ public class BackendConnexion {
 
     public static Toast error_server, invalid_params, incorrect_password;
 
+    public static Intent start_agenda, go_login;
+
     String type;
     Context context;
     ProgressBarAgenda progressBar;
@@ -47,6 +54,7 @@ public class BackendConnexion {
         this.type = type;
         this.context = context;
         this.progressBar = progressBar;
+
 
         requestQueue = Volley.newRequestQueue(context);
 
@@ -137,6 +145,18 @@ public class BackendConnexion {
 
         progressBar.show();
         requestQueue.add(jsonArrayRequest);
+    }
+
+    public static boolean isLogged (Context context){
+        start_agenda = new Intent(context, Agenda.class);
+        go_login = new Intent(context, LoginActivity.class);
+       SharedPreferences session = context.getSharedPreferences("com.example.agendamovil", MODE_PRIVATE);
+
+        if(session.getBoolean("logged", false)){
+            return true;
+        }else{
+            return false;
+        }
     }
 
 }
