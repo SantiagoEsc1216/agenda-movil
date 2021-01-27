@@ -1,48 +1,74 @@
-package com.example.agendamovil;
+ package com.example.agendamovil;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import 	android.util.Base64;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.example.agendamovil.session.BackendConnexion;
+import com.example.agendamovil.session.VolleyCallback;
 import com.example.agendamovil.toolbar.ToolbarFunctions;
 import com.example.agendamovil.validators.InputValidator;
 import com.example.agendamovil.validators.ValidatorOnTextChange;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class new_contact extends AppCompatActivity {
 
+    FrameLayout body;
     EditText name, email, phone;
     Button upload_img, btnNewContact;
     ImageView img_contact;
     InputValidator inputValidator;
     Toolbar toolbar;
     List<EditText> inputs = new ArrayList<>();
+    SharedPreferences session;
+    ProgressBarAgenda progressBar;
+
+    Map<String, String> params = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_contact);
 
+        body = findViewById(R.id.body_new_contact);
+
+        session = getSharedPreferences("com.example.agendamovil", MODE_PRIVATE);
         toolbar = findViewById(R.id.toolbar_custom);
         toolbar.setTitle(R.string.create_contact);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(getDrawable(R.drawable.baseline_home_white_18dp));
+
+        progressBar = new ProgressBarAgenda(this);
+        body.addView(progressBar);
+        progressBar.bringToFront();
 
         name = (EditText)findViewById(R.id.name_new_contact);
         email = (EditText)findViewById(R.id.email_new_contact);
@@ -96,6 +122,8 @@ public class new_contact extends AppCompatActivity {
               final InputStream imgStream = getContentResolver().openInputStream(imageUri);
               final Bitmap selectImage = BitmapFactory.decodeStream(imgStream);
               img_contact.setImageBitmap(selectImage);
+              params.put("img_contact", convertToString(selectImage));
+
           }catch (FileNotFoundException e){
               e.printStackTrace();
           }
@@ -103,11 +131,72 @@ public class new_contact extends AppCompatActivity {
 
   }
 
-  public void validNewContactForm(View v){
+    public static String convertToString(Bitmap selectImage) {
+
+        ByteArrayOutputStream arrayOutputStream =  new ByteArrayOutputStream();
+        selectImage.compress(Bitmap.CompressFormat.PNG, 50, arrayOutputStream);
+        byte[] imageByte = arrayOutputStream.toByteArray();
+        String imageString = Base64.encodeToString(imageByte, Base64.DEFAULT);
+
+        return imageString;
+    }
+
+    public void validNewContactForm(View v){
 
         if(inputValidator.validForm(inputs)){
-            //TODO: subir datos
+            uploadContact();
         }
+  }
+
+  public void uploadContact(){
+      BackendConnexion connexion = new BackendConnexion(this, BackendConnexion.CREATE_CONTACT, progressBar);
+
+      params.put("email_contact", email.getText().toString());
+      params.put("name_contact", name.getText().toString());
+      params.put("phone_contact", phone.getText().toString());
+      params.put("session_email", session.getString("email", ""));
+
+      connexion.stringRequest(params, new VolleyCallback() {
+          @Override
+          public void onResponseString(String response) {
+              Log.e("response_add", response.trim());
+              Log.e("params_add", params.toString());
+              switch (response.trim()){
+                  case "OK":
+                      Toast OK = Toast.makeText(getApplicationContext(), R.string.ok_contact, Toast.LENGTH_SHORT);
+                      OK.show();
+                      resetForm();
+                      break;
+                  case "error":
+                     BackendConnexion.error_server.show();
+                      break;
+
+                  case "invalid params":
+                      BackendConnexion.invalid_params.show();
+              }
+          }
+
+          @Override
+          public void onResponseJsonObject(JSONObject response) {
+
+          }
+
+          @Override
+          public void onResponseJsonArray(JSONArray response) {
+
+          }
+
+      });
+  }
+
+  public void resetForm(){
+      for (EditText input: inputs) {
+          input.setText("");
+          input.setError(null);
+      }
+      img_contact.setImageDrawable(getDrawable(R.drawable.default_img));
+      params.remove("img_contact");
+
   }
 
     @Override

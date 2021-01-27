@@ -4,10 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".new_contact"
-    android:id="@+id/body_new_contact">
+    tools:context=".new_contact">
 
     <include layout="@layout/tool_bar"/>
+
+    <FrameLayout android:id="@+id/body_new_contact"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </FrameLayout>
 
     <ScrollView
         android:id="@+id/scroll_new_contact"
@@ -107,6 +112,15 @@
                     android:text="Ingrese un e-mail valido"
                     android:visibility="invisible" />
 
+                <TextView
+                    android:id="@+id/imgage_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginBottom="8dp"
+                    android:text="@string/img_info" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -162,15 +176,6 @@
                     android:src="@drawable/default_img"
                     tools:layout_editor_absoluteX="16dp"
                     tools:layout_editor_absoluteY="16dp" />
-
-                <TextView
-                    android:id="@+id/imgage_info"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginEnd="24dp"
-                    android:layout_marginBottom="8dp"
-                    android:text="@string/img_info" />
 
                 <Button
                     android:id="@+id/upload_img"

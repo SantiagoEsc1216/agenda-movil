@@ -2,14 +2,13 @@ package com.example.agendamovil.toolbar;
 
 import android.content.Context;
 import android.content.Intent;
-import android.text.Editable;
+import android.content.SharedPreferences;
 import android.view.View;
-import android.widget.LinearLayout;
 
 import com.example.agendamovil.Agenda;
 import com.example.agendamovil.CardContact;
 import com.example.agendamovil.Profile;
-import com.example.agendamovil.ui.login.LoginActivity;
+import com.example.agendamovil.LoginActivity;
 
 import java.util.List;
 import java.util.regex.Pattern;
@@ -17,9 +16,11 @@ import java.util.regex.Pattern;
 public class ToolbarFunctions {
 
     Context context;
+    SharedPreferences session;
 
     public ToolbarFunctions(Context context){
         this.context = context;
+        session = context.getSharedPreferences("com.example.agendamovil", Context.MODE_PRIVATE);
     }
 
     public void backAgenda(){
@@ -56,6 +57,15 @@ public class ToolbarFunctions {
     }
 
     public void closeSession(){
+        Intent login = new Intent(context, LoginActivity.class);
+        SharedPreferences.Editor editor = session.edit();
+        editor.remove("username");
+        editor.remove("email");
+        editor.remove("logged");
+        editor.apply();
+        if(!session.getBoolean("logged", false)){
+            context.startActivity(login);
+        }
 
     }
 

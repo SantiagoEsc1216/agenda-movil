@@ -1,114 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/bac"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_card"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_margin="16dp"
-    android:orientation="vertical">
+    android:layout_height="wrap_content">
 
-    <LinearLayout android:id="@+id/card_header"
-        android:orientation="vertical"
+
+    <LinearLayout
+        android:id="@+id/card_contact"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/border_card_header">
+        android:layout_height="match_parent"
+        android:layout_margin="16dp"
+        android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/name"
+        <LinearLayout android:id="@+id/card_header"
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:inputType="textPersonName"
-            android:text="name" />
+            android:background="@drawable/border_card_header">
+
+            <EditText
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:inputType="textPersonName"
+                android:text="name"
+                android:textIsSelectable="false" />
 
 
+
+        </LinearLayout>
+        <LinearLayout android:id="@+id/card_body"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border_card_body">
+
+            <ImageView android:id="@+id/img_view_card"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_margin="8dp"
+                android:src="@drawable/default_img" />
+
+            <Button android:id="@+id/btn_img"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="16dp"
+                android:background="@drawable/border_card_header"
+                android:backgroundTint="@color/cardview_shadow_end_color"
+                android:textColor="@color/black"
+                android:visibility="gone"
+                android:text="Cambiar imagen" />
+
+            <EditText
+                android:id="@+id/email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:inputType="textEmailAddress"
+                android:text="E-Mail" />
+
+            <EditText android:id="@+id/phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:inputType="phone"
+                android:text="Phone" />
+
+        </LinearLayout>>
+
+        <LinearLayout android:id="@+id/card_footer"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border_card_header">
+
+            <Button
+                android:id="@+id/btn_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:backgroundTint="#0275d8"
+                android:text="@string/edit"
+                android:textColor="@color/white" />
+
+            <Button
+                android:id="@+id/btn_delete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:backgroundTint="#d9534f"
+                android:text="@string/delete"
+                android:textColor="@color/white" />
+
+            <Button
+                android:id="@+id/btn_accept"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:backgroundTint="#5cb85c"
+                android:onClick="val"
+                android:text="@string/accept"
+                android:textColor="@color/white"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/btn_cancel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:backgroundTint="#d9534f"
+                android:text="@string/cancel"
+                android:textColor="@color/white"
+                android:visibility="gone" />
+
+        </LinearLayout>
 
     </LinearLayout>
-    <LinearLayout android:id="@+id/card_body"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/border_card_body">
 
-        <ImageView android:id="@+id/img_view"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_margin="8dp"
-            android:src="@drawable/default_img" />
-
-        <Button android:id="@+id/btn_img"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginHorizontal="16dp"
-            android:background="@drawable/border_card_header"
-            android:backgroundTint="@color/cardview_shadow_end_color"
-            android:textColor="@color/black"
-            android:visibility="gone"
-            android:text="Cambiar imagen" />
-
-        <EditText
-            android:id="@+id/email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:inputType="textEmailAddress"
-            android:text="E-Mail" />
-
-        <EditText android:id="@+id/phone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:inputType="phone"
-            android:text="Phone" />
-
-    </LinearLayout>>
-
-    <LinearLayout android:id="@+id/card_footer"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/border_card_header">
-
-        <Button
-            android:id="@+id/btn_edit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:backgroundTint="#0275d8"
-            android:text="@string/edit"
-            android:textColor="@color/white" />
-
-        <Button
-            android:id="@+id/btn_delete"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:backgroundTint="#d9534f"
-            android:text="@string/delete"
-            android:textColor="@color/white" />
-
-        <Button
-            android:id="@+id/btn_accept"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:backgroundTint="#5cb85c"
-            android:onClick="val"
-            android:text="@string/accept"
-            android:textColor="@color/white"
-            android:visibility="gone" />
-
-        <Button
-            android:id="@+id/btn_cancel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:backgroundTint="#d9534f"
-            android:text="@string/cancel"
-            android:textColor="@color/white"
-            android:visibility="gone" />
-
-    </LinearLayout>
+</FrameLayout>
 
 
-</LinearLayout>

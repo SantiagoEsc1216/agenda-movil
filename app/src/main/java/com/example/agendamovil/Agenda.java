@@ -3,69 +3,143 @@ package com.example.agendamovil;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.SearchView;
+import android.widget.TextView;
 
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.example.agendamovil.session.BackendConnexion;
+import com.example.agendamovil.session.VolleyCallback;
 import com.example.agendamovil.toolbar.ToolbarFunctions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.lang.invoke.ConstantCallSite;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-// TODO: Search configuration
+import java.util.Map;
+import java.util.concurrent.ExecutionException;
+
+// TODO: progessbar, icono y nombre de app, solicitar permiso de almacenamiento y cambiar a pestaña en inicio de sesion en todas las actividades
 public class Agenda extends AppCompatActivity {
     LinearLayout scrollContacts;
+    ProgressBarAgenda progressBar;
     FloatingActionButton addNewContact;
+    TextView messageEmpty;
     List<CardContact> cardContactList = new ArrayList<CardContact>();
     Toolbar toolbar;
-    ToolbarFunctions toolbarFunctions = new ToolbarFunctions(this);
+    ToolbarFunctions toolbarFunctions;
+    SharedPreferences session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_agenda);
-        toolbar = (Toolbar) findViewById(R.id.toolbar_custom);
-        setSupportActionBar(toolbar);
+        session = getSharedPreferences("com.example.agendamovil", MODE_PRIVATE);
+        toolbar = findViewById(R.id.toolbar_custom);
+        toolbarFunctions = new ToolbarFunctions(this);
         toolbar.setTitle(R.string.agenda);
-        scrollContacts = (LinearLayout) findViewById(R.id.scroll_contacts);
-        addNewContact = (FloatingActionButton)findViewById(R.id.create_contact);
-        createCardContacts();
+        setSupportActionBar(toolbar);
+        progressBar = new ProgressBarAgenda(this);
+        scrollContacts = findViewById(R.id.scroll_contacts);
+        scrollContacts.addView(progressBar);
+        addNewContact = findViewById(R.id.create_contact);
+        messageEmpty = findViewById(R.id.agenda_empty);
+        getContacts();
 
     }
 
-    private void createCardContacts(){
-        for (int i = 0; i < 8; i++){
-            int finalI = i;
-            CardContact this_card;
+    private void createCardContacts(JSONArray response){
 
-            cardContactList.add( i ,new CardContact(this, "contact" + i, "444433442" + i, "default.jpeg", "email_" + i + "@mail.com"));
-            this_card = cardContactList.get(i);
+        try {
+            for (int i = 0; i< response.length(); i++){
+                int finalI = i;
+                CardContact this_card;
+                JSONObject contact = response.getJSONObject(i);
+                int id = contact.getInt("ID_Contact");
+                String name = contact.getString("Name_Contact");
+                String phone = contact.getString("Phone_Contact");
+                String email = contact.getString("Mail_Contact");
+                String base64Img = contact.getString("base64_img");
 
-           this_card.btn_img.setOnClickListener(v -> {
-               startActivityForResult(this_card.PickPhoto(), finalI);
-           });
-           this_card.btn_edit.setOnClickListener(v -> this_card.editContact(cardContactList));
-           this_card.btn_cancel.setOnClickListener(v -> this_card.cancel_edit(cardContactList));
+                this_card = new CardContact(this, id,name, phone, base64Img, email);
+                cardContactList.add( i , this_card);
+                this_card = cardContactList.get(i);
 
-            scrollContacts.addView(this_card);
+                CardContact finalThis_card = this_card;
+                this_card.btn_img.setOnClickListener(v -> {
+                    startActivityForResult(finalThis_card.PickPhoto(), finalI);
+                });
+                this_card.btn_edit.setOnClickListener(v -> finalThis_card.editContact(cardContactList));
+                this_card.btn_cancel.setOnClickListener(v -> finalThis_card.cancel_edit(cardContactList));
+
+                scrollContacts.addView(this_card);
+
+            }
+        }catch (JSONException e){
+            Log.e("error_contact",e.toString() );
         }
+
+    }
+
+    private void getContacts(){
+        BackendConnexion connexion = new BackendConnexion(this, BackendConnexion.GET_CONTACTS, progressBar);
+        Map<String, String> params = new HashMap<>();
+
+        connexion.getRequest(session.getString("email", ""), new VolleyCallback() {
+
+            @Override
+            public void onResponseString(String response) {
+
+            }
+
+            @Override
+            public void onResponseJsonObject(JSONObject response) {
+
+            }
+
+            @Override
+            public void onResponseJsonArray(JSONArray response) {
+
+                if(response.length() > 0){
+                    createCardContacts(response);
+                }else{
+                    messageEmpty.setVisibility(View.VISIBLE);
+                }
+            }
+
+
+        });
+
+
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        ImageView imageView = cardContactList.get(requestCode).img_view;
         if (resultCode == RESULT_OK) {
-            cardContactList.get(requestCode).setImage(data, imageView, this);
+            cardContactList.get(requestCode).setImage(data);
         }
     }
 
