@@ -43,9 +43,9 @@ public class ToolbarFunctions {
             email = contacts.get(i).email_contact;
             phone = contacts.get(i).phone_contact;
 
-            matchName = pattern.matcher(name).find();
-            matchEmail = pattern.matcher(email).find();
-            matchPhone = pattern.matcher(phone).find();
+            matchName = pattern.matcher("^"+name).find();
+            matchEmail = pattern.matcher("^"+email).find();
+            matchPhone = pattern.matcher("^"+phone).find();
 
             if (matchName || matchEmail || matchPhone){
                 contacts.get(i).setVisibility(View.VISIBLE);

@@ -24,6 +24,8 @@
     <string name="incorrect_pass">Incorrect password</string>
     <string name="incorrect_pass_or_email">Incorrect password or password</string>
     <string name="invalid_params">Invalid params</string>
+    <string name="error_image">Not was possible process the image</string>
+
 
     <!-- Cardcontact -->
     <string name="edit">Edit</string>
@@ -35,6 +37,7 @@
     <string name="no">No</string>
     <string name="contact_deleted">Contact deleted</string>
     <string name="contact_edited">Contact updated</string>
+    <string name="okey">Okey!</string>
 
     <!-- Contact -->
     <string name="new_contact">New contact</string>

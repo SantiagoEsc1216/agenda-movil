@@ -1,9 +1,13 @@
  package com.example.agendamovil;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,13 +30,16 @@ import com.example.agendamovil.session.VolleyCallback;
 import com.example.agendamovil.toolbar.ToolbarFunctions;
 import com.example.agendamovil.validators.InputValidator;
 import com.example.agendamovil.validators.ValidatorOnTextChange;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -122,11 +129,22 @@ public class new_contact extends AppCompatActivity {
 
       if (resultCode == RESULT_OK){
           try {
+
               final Uri imageUri = data.getData();
               final InputStream imgStream = getContentResolver().openInputStream(imageUri);
-              final Bitmap selectImage = BitmapFactory.decodeStream(imgStream);
-              img_contact.setImageBitmap(selectImage);
-              params.put("img_contact", convertToString(selectImage));
+
+              Bitmap bitmapImage = BitmapFactory.decodeStream(imgStream);
+              int width = bitmapImage.getWidth();
+              int height = bitmapImage.getHeight();
+              Picasso.get().load(imageUri).resize(width, height).centerCrop().into(img_contact);
+
+              if(bitmapImage != null){
+                  params.put("img_contact", convertToString(bitmapImage));
+
+              }else {
+                  Dialog dialog = errorProcessImageDialog(this);
+                  dialog.show();
+              }
 
           }catch (FileNotFoundException e){
               e.printStackTrace();
@@ -135,14 +153,41 @@ public class new_contact extends AppCompatActivity {
 
   }
 
+
     public static String convertToString(Bitmap selectImage) {
 
         ByteArrayOutputStream arrayOutputStream =  new ByteArrayOutputStream();
-        selectImage.compress(Bitmap.CompressFormat.PNG, 50, arrayOutputStream);
+
+        final int height = selectImage.getHeight();
+        final int width = selectImage.getWidth();
+
+        int newHeight;
+        int newWidth;
+
+        int resize = 2;
+
+        while(height > 300){
+
+            newHeight = height/resize;
+            newWidth = width / resize;
+
+            if(newHeight < 600){
+                selectImage = Bitmap.createScaledBitmap(selectImage, newWidth, newHeight, false);
+                break;
+            }
+            resize *= 2;
+        }
+        selectImage.compress(Bitmap.CompressFormat.PNG, 100, arrayOutputStream);
         byte[] imageByte = arrayOutputStream.toByteArray();
         String imageString = Base64.encodeToString(imageByte, Base64.DEFAULT);
 
         return imageString;
+    }
+
+    public static Dialog errorProcessImageDialog(Context context){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage(R.string.error_image).setPositiveButton( R.string.okey , (dialog, which) -> {});
+        return  builder.create();
     }
 
     public void validNewContactForm(View v){

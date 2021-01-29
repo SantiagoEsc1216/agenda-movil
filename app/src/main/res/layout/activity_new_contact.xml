@@ -173,9 +173,11 @@
                     android:id="@+id/imgContact"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
+                    android:layout_margin="16dp"
                     android:src="@drawable/default_img"
                     tools:layout_editor_absoluteX="16dp"
-                    tools:layout_editor_absoluteY="16dp" />
+                    tools:layout_editor_absoluteY="16dp"
+                     android:scaleType="centerCrop"/>
 
                 <Button
                     android:id="@+id/upload_img"

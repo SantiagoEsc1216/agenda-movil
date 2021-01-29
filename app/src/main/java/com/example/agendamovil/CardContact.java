@@ -1,7 +1,9 @@
 package com.example.agendamovil;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -23,6 +25,7 @@ import com.example.agendamovil.session.BackendConnexion;
 import com.example.agendamovil.session.VolleyCallback;
 import com.example.agendamovil.validators.InputValidator;
 import com.example.agendamovil.validators.ValidatorOnTextChange;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -31,6 +34,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataOutput;
 import java.io.DataOutputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -167,6 +171,17 @@ public class CardContact extends LinearLayout {
         params.put("email_contact", newEmail );
         params.put("phone_contact", newPhone);
         params.put("email_user", session.getString("email", ""));
+
+        if(newImage !=null){
+            progressBar.show();
+
+            final String imgString =  new_contact.convertToString(newImage);
+            params.put("img_contact", imgString);
+            bitmapImage = newImage;
+            Log.e("params", params.toString());
+        }else{
+            params.remove("img_contact");
+        }
         connexion.stringRequest(params, new VolleyCallback() {
             @Override
             public void onResponseString(String response) {
@@ -174,7 +189,7 @@ public class CardContact extends LinearLayout {
                    name_contact = newName;
                    email_contact = newEmail;
                    phone_contact = newPhone;
-                   bitmapImage = newImage;
+
                    Toast ok = Toast.makeText(context, context.getString(R.string.contact_edited), Toast.LENGTH_SHORT);
                    btn_cancel.performClick();
                    ok.show();
@@ -271,6 +286,7 @@ public class CardContact extends LinearLayout {
         img_view.setImageBitmap(bitmapImage);
 
         params.clear();
+        newImage=null;
 
         for (int i = 0; cardContactList.size() > i; i++){
             cardContactList.get(i).setAlpha((float) 1.0);
@@ -297,12 +313,13 @@ public class CardContact extends LinearLayout {
 
     public void setImage (Intent data){
         try {
-            final Uri imageUri = data.getData();
-            final InputStream imgStream = context.getContentResolver().openInputStream(imageUri);
-            newImage = BitmapFactory.decodeStream(imgStream);
-            final String imgString =  new_contact.convertToString(newImage);
-            params.put("img_contact", imgString);
-            img_view.setImageBitmap(newImage);
+            Uri imageUri = data.getData();
+
+           InputStream imgStream = context.getContentResolver().openInputStream(imageUri);
+           newImage = BitmapFactory.decodeStream(imgStream);
+           int width = newImage.getWidth()/2;
+           int height = newImage.getHeight()/2;
+           Picasso.get().load(imageUri).resize(width, height).centerCrop().into(img_view);
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();

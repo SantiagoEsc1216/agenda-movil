@@ -26,6 +26,7 @@
     <string name="incorrect_pass">Contraseña incorrecta</string>
     <string name="incorrect_pass_or_email">Correo o contraseña incorrectos</string>
     <string name="invalid_params">Parametros invalidos</string>
+    <string name="error_image">No se pudo procesar la imagen</string>
 
     <!-- Cardcontact -->
     <string name="edit">Editar</string>
@@ -33,6 +34,7 @@
     <string name="accept">Aceptar</string>
     <string name="cancel">Cancelar</string>
     <string name="confirm_delete">¿Estas seguro de eliminar este contacto?</string>
+    <string name="okey">Entendido!</string>
 
     <!-- Contact -->
     <string name="new_contact">Contacto nuevo</string>
