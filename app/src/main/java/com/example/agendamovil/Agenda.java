@@ -9,6 +9,7 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -26,6 +27,7 @@ import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.example.agendamovil.session.AgendaPermissions;
 import com.example.agendamovil.session.BackendConnexion;
 import com.example.agendamovil.session.VolleyCallback;
 import com.example.agendamovil.toolbar.ToolbarFunctions;
@@ -48,7 +50,7 @@ public class Agenda extends AppCompatActivity {
     ProgressBarAgenda progressBar;
     FloatingActionButton addNewContact;
     TextView messageEmpty;
-    List<CardContact> cardContactList = new ArrayList<CardContact>();
+    HashMap<Integer, CardContact> cardContactHashMap = new HashMap<>();
     Toolbar toolbar;
     ToolbarFunctions toolbarFunctions;
     SharedPreferences session;
@@ -78,7 +80,7 @@ public class Agenda extends AppCompatActivity {
 
         try {
             for (int i = 0; i< response.length(); i++){
-                int finalI = i;
+
                 CardContact this_card;
                 JSONObject contact = response.getJSONObject(i);
                 int id = contact.getInt("ID_Contact");
@@ -87,16 +89,12 @@ public class Agenda extends AppCompatActivity {
                 String email = contact.getString("Mail_Contact");
                 String base64Img = contact.getString("base64_img");
 
-                this_card = new CardContact(this, id,name, phone, base64Img, email);
-                cardContactList.add( i , this_card);
-                this_card = cardContactList.get(i);
+                this_card = new CardContact(Agenda.this, id,name, phone, base64Img, email);
 
-                CardContact finalThis_card = this_card;
-                this_card.btn_img.setOnClickListener(v -> {
-                    startActivityForResult(finalThis_card.PickPhoto(), finalI);
-                });
-                this_card.btn_edit.setOnClickListener(v -> finalThis_card.editContact(cardContactList));
-                this_card.btn_cancel.setOnClickListener(v -> finalThis_card.cancel_edit(cardContactList));
+                cardContactHashMap.put(id, this_card);
+
+                this_card.btn_edit.setOnClickListener(v -> this_card.editContact(cardContactHashMap));
+                this_card.btn_cancel.setOnClickListener(v -> this_card.cancel_edit(cardContactHashMap));
 
                 scrollContacts.addView(this_card);
 
@@ -109,7 +107,6 @@ public class Agenda extends AppCompatActivity {
 
     private void getContacts(){
         BackendConnexion connexion = new BackendConnexion(this, BackendConnexion.GET_CONTACTS, progressBar);
-        Map<String, String> params = new HashMap<>();
 
         connexion.getRequest(session.getString("email", ""), new VolleyCallback() {
 
@@ -139,10 +136,21 @@ public class Agenda extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if(requestCode == 1){
+            if(grantResults.length>0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                AgendaPermissions.selectImage(Agenda.this, requestCode);
+            }
+        }
+    }
+
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            cardContactList.get(requestCode).setImage(data);
+        //    cardContactList.get(requestCode).setImage(data);
+            cardContactHashMap.get(requestCode).setImage(data);
+            Log.e("requestCode", String.valueOf(requestCode));
         }
     }
 
@@ -168,7 +176,7 @@ public class Agenda extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                toolbarFunctions.searchContact(cardContactList,newText);
+                toolbarFunctions.searchContact(cardContactHashMap, newText);
                 return false;
             }
         });

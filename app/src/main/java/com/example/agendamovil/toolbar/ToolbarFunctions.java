@@ -10,7 +10,9 @@ import com.example.agendamovil.CardContact;
 import com.example.agendamovil.Profile;
 import com.example.agendamovil.LoginActivity;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 public class ToolbarFunctions {
@@ -33,27 +35,28 @@ public class ToolbarFunctions {
         this.context.startActivity(profile);
     }
 
-    public void searchContact(List<CardContact> contacts, String inputSearch){
+    public void searchContact(HashMap<Integer,CardContact> hashMap, String inputSearch){
         Pattern pattern = Pattern.compile(inputSearch);
-        for(int i=0; i<contacts.size(); i++){
+        for (Map.Entry<Integer, CardContact> entry: hashMap.entrySet()){
+            CardContact card = entry.getValue();
             String name, email, phone;
             boolean matchName, matchEmail, matchPhone;
 
-            name = contacts.get(i).name_contact;
-            email = contacts.get(i).email_contact;
-            phone = contacts.get(i).phone_contact;
+            name = card.name_contact;
+            email = card.email_contact;
+            phone = card.phone_contact;
 
-            matchName = pattern.matcher("^"+name).find();
-            matchEmail = pattern.matcher("^"+email).find();
-            matchPhone = pattern.matcher("^"+phone).find();
+            matchName = pattern.matcher(name).find();
+            matchEmail = pattern.matcher(email).find();
+            matchPhone = pattern.matcher(phone).find();
 
             if (matchName || matchEmail || matchPhone){
-                contacts.get(i).setVisibility(View.VISIBLE);
+                card.setVisibility(View.VISIBLE);
             }else{
-                contacts.get(i).setVisibility(View.GONE);
+                card.setVisibility(View.GONE);
             }
-
         }
+
     }
 
     public void closeSession(){

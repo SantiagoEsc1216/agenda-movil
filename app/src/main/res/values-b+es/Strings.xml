@@ -76,4 +76,10 @@
     <string name="error">El servidor no pudo realizar la petición</string>
     <string name="login_error">El correo electronico o la contraseña son incorrectas</string>
     <string name="retry_petition">¿Quiere volver a intentar la petción al servidor?</string>
+
+
+    <!-- Permissions -->
+    <string name="permissions_tittle">Infomación de permisos</string>
+    <string name="permissions_description">Si quieres añadir una imagen personalizada a tus contactos,
+        acepte los permisos de forma manual desde la configuración de la app</string>
 </resources>

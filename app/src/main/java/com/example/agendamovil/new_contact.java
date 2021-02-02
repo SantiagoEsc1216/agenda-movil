@@ -1,13 +1,15 @@
  package com.example.agendamovil;
 
+import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,10 +23,13 @@ import android.widget.ImageView;
 import 	android.util.Base64;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
-import com.android.volley.toolbox.JsonArrayRequest;
+import com.example.agendamovil.session.AgendaPermissions;
 import com.example.agendamovil.session.BackendConnexion;
 import com.example.agendamovil.session.VolleyCallback;
 import com.example.agendamovil.toolbar.ToolbarFunctions;
@@ -37,9 +42,7 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -47,9 +50,11 @@ import java.util.Map;
 
 public class new_contact extends AppCompatActivity {
 
+
+
     FrameLayout body;
     EditText name, email, phone;
-    Button upload_img, btnNewContact;
+    Button btn_select_img, btnNewContact;
     ImageView img_contact;
     InputValidator inputValidator;
     Toolbar toolbar;
@@ -84,13 +89,18 @@ public class new_contact extends AppCompatActivity {
         name = (EditText)findViewById(R.id.name_new_contact);
         email = (EditText)findViewById(R.id.email_new_contact);
         phone = (EditText)findViewById(R.id.phone_new_contact);
-        upload_img = (Button)findViewById(R.id.upload_img);
+        btn_select_img = (Button)findViewById(R.id.upload_img_new_contact);
         btnNewContact = (Button)findViewById(R.id.btn_new_contact) ;
         img_contact = (ImageView)findViewById(R.id.imgContact);
 
         inputs.add(name);
         inputs.add(email);
         inputs.add(phone);
+
+        btn_select_img.setOnClickListener(v->{
+            AgendaPermissions.permissionsApp(new_contact.this, AgendaPermissions.PICK_FROM_GALLERY);
+        });
+
 
         inputValidator = new InputValidator();
 
@@ -115,16 +125,17 @@ public class new_contact extends AppCompatActivity {
 
     }
 
-    public void selectImage(View V) {
-        String[] img_types = {"image/jpeg", "image/png"};
-        Intent pick_photo = new Intent(Intent.ACTION_PICK , android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        pick_photo.setType("image/jpeg");
-        pick_photo.putExtra(Intent.EXTRA_MIME_TYPES, img_types);
-        startActivityForResult(pick_photo, 1);
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if(requestCode == 1){
+            if(grantResults.length>0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                AgendaPermissions.selectImage(new_contact.this, AgendaPermissions.PICK_FROM_GALLERY);
+            }
+        }
     }
 
-
-  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
       super.onActivityResult(requestCode, resultCode, data);
 
       if (resultCode == RESULT_OK){
@@ -247,6 +258,7 @@ public class new_contact extends AppCompatActivity {
       params.remove("img_contact");
 
   }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

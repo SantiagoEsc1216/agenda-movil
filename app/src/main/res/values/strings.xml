@@ -75,6 +75,8 @@
     <string name="retry_petition">Do you want retry the petition to the server?</string>
 
 
-
+    <!-- Permissions -->
+    <string name="permissions_tittle">Permissions info</string>
+    <string name="permissions_description">Allow manually the permissions if you wanted add a custom image to your contact</string>
 
 </resources>

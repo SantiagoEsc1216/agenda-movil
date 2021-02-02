@@ -1,9 +1,8 @@
 package com.example.agendamovil;
 
+import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -21,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.example.agendamovil.session.AgendaPermissions;
 import com.example.agendamovil.session.BackendConnexion;
 import com.example.agendamovil.session.VolleyCallback;
 import com.example.agendamovil.validators.InputValidator;
@@ -30,13 +30,8 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutput;
-import java.io.DataOutputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -52,23 +47,23 @@ public class CardContact extends LinearLayout {
     Button btn_edit, btn_cancel, btn_accept, btn_delete, btn_img;
     ValidatorOnTextChange name_validator, email_validator, phone_validator;
     InputValidator inputValidator;
-    Context context;
+    Activity activity;
     List<EditText> inputs = new ArrayList<>();
     Bitmap bitmapImage, newImage;
     Map<String, String> params = new HashMap<>();
     ProgressBarAgenda progressBar;
 
-    public CardContact(Context context, int id ,String name_contact, String phone_contact, String base64_img, String email_contact) {
-        super(context);
+    public CardContact(Activity activity, int id , String name_contact, String phone_contact, String base64_img, String email_contact) {
+        super(activity);
         this.id = id;
         this.name_contact = name_contact;
         this.phone_contact = phone_contact;
         this.base64_img = base64_img;
         this.name_img = base64_img;
         this.email_contact = email_contact;
-        this.context = context;
-        this.session = context.getSharedPreferences("com.example.agendamovil", Context.MODE_PRIVATE);
-        init(context);
+        this.activity = activity;
+        this.session = activity.getSharedPreferences("com.example.agendamovil", Context.MODE_PRIVATE);
+        init(activity);
         card_values();
     }
 
@@ -133,6 +128,10 @@ public class CardContact extends LinearLayout {
             }
         });
 
+        btn_img.setOnClickListener(v -> {
+            AgendaPermissions.permissionsApp(activity, id);
+        });
+
 
         btn_accept.setOnClickListener(v -> {
             if(inputValidator.validForm(inputs)){
@@ -155,11 +154,10 @@ public class CardContact extends LinearLayout {
 
     });
 
-
     }
 
     private void uploadEdit() {
-        BackendConnexion connexion = new BackendConnexion(context, BackendConnexion.EDIT_CONTACT, progressBar);
+        BackendConnexion connexion = new BackendConnexion(activity, BackendConnexion.EDIT_CONTACT, progressBar);
         String newName, newEmail, newPhone;
         newName = name_card.getText().toString();
         newPhone = phone_card.getText().toString();
@@ -190,7 +188,7 @@ public class CardContact extends LinearLayout {
                    email_contact = newEmail;
                    phone_contact = newPhone;
 
-                   Toast ok = Toast.makeText(context, context.getString(R.string.contact_edited), Toast.LENGTH_SHORT);
+                   Toast ok = Toast.makeText(activity, activity.getString(R.string.contact_edited), Toast.LENGTH_SHORT);
                    btn_cancel.performClick();
                    ok.show();
                }else{
@@ -208,7 +206,7 @@ public class CardContact extends LinearLayout {
     }
 
     private void uploadDelete() {
-        BackendConnexion connexion = new BackendConnexion(context, BackendConnexion.EDIT_CONTACT, progressBar);
+        BackendConnexion connexion = new BackendConnexion(activity, BackendConnexion.EDIT_CONTACT, progressBar);
         params.put("btn_confirm_delete", "true");
         params.put("id_contact", String.valueOf(id));
         params.put("email_user", session.getString("email", ""));
@@ -220,7 +218,7 @@ public class CardContact extends LinearLayout {
                 switch (response.trim()){
                     case "OK":
                         deleteCard();
-                        Toast ok = Toast.makeText(context, context.getString(R.string.contact_deleted), Toast.LENGTH_SHORT);
+                        Toast ok = Toast.makeText(activity, activity.getString(R.string.contact_deleted), Toast.LENGTH_SHORT);
                         ok.show();
                         break;
                     case "error":
@@ -247,7 +245,7 @@ public class CardContact extends LinearLayout {
     }
 
 
-    public void editContact(List<CardContact> cardContactList){
+    public void editContact(HashMap<Integer, CardContact> hashMap){
         name_card.setKeyListener((KeyListener) name_card.getTag());
         email_card.setKeyListener((KeyListener) name_card.getTag());
         phone_card.setKeyListener((KeyListener)phone_card.getTag());
@@ -260,20 +258,21 @@ public class CardContact extends LinearLayout {
         btn_cancel.setVisibility(View.VISIBLE);
         btn_img.setVisibility(View.VISIBLE);
 
-        for (int i = 0; cardContactList.size() > i; i++){
-            cardContactList.get(i).setAlpha((float) 0.5);
-            cardContactList.get(i).btn_edit.setEnabled(false);
-            cardContactList.get(i).btn_delete.setEnabled(false);
+        for (Map.Entry<Integer, CardContact> entry : hashMap.entrySet()){
+            CardContact card = entry.getValue();
+
+            card.setAlpha((float) 0.5);
+            card.btn_edit.setEnabled(false);
+            card.btn_delete.setEnabled(false);
         }
 
         this.setAlpha((float) 1.0);
     }
 
-    public void cancel_edit(List<CardContact> cardContactList){
+    public void cancel_edit(HashMap<Integer, CardContact> hashMap){
         for(EditText input: inputs){
             input.setKeyListener(null);
             input.setError(null);
-
         }
 
         btn_cancel.setVisibility(View.GONE);
@@ -288,10 +287,11 @@ public class CardContact extends LinearLayout {
         params.clear();
         newImage=null;
 
-        for (int i = 0; cardContactList.size() > i; i++){
-            cardContactList.get(i).setAlpha((float) 1.0);
-            cardContactList.get(i).btn_edit.setEnabled(true);
-            cardContactList.get(i).btn_delete.setEnabled(true);
+        for(Map.Entry<Integer, CardContact> entry: hashMap.entrySet()){
+            CardContact card = entry.getValue();
+            card.setAlpha(1);
+            card.btn_edit.setEnabled(true);
+            card.btn_delete.setEnabled(true);
         }
 
         card_values();
@@ -315,7 +315,7 @@ public class CardContact extends LinearLayout {
         try {
             Uri imageUri = data.getData();
 
-           InputStream imgStream = context.getContentResolver().openInputStream(imageUri);
+           InputStream imgStream = activity.getContentResolver().openInputStream(imageUri);
            newImage = BitmapFactory.decodeStream(imgStream);
            int width = newImage.getWidth()/2;
            int height = newImage.getHeight()/2;
